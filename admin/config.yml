@@ -1,44 +1,34 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
 backend:
-  name: git-gateway
+  name: github
+  repo: YOUR_GITHUB_USERNAME/YOUR_REPOSITORY_NAME
   branch: main
-
-local_backend: false
-publish_mode: simple
 
 media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
 
-site_url: "/"
-display_url: "/"
-logo_url: "/assets/uploads/admin-logo.png"
-
 collections:
-  - name: "blog"
-    label: "Blog Posts"
-    label_singular: "Blog Post"
-    description: "Create and update posts for the Media Hub blog."
+  - name: "site_content"
+    label: "Content Dashboard"
+    icon: "dashboard"
     files:
-      - name: "posts"
-        label: "Posts Data"
+      - name: "blog_posts"
+        label: "Blog Posts"
         file: "data/posts.json"
-        format: "json"
-        editor:
-          preview: false
+        description: "Edit the posts shown on the Media Hub page."
         fields:
-          - name: "posts"
-            label: "Posts"
-            label_singular: "Post"
+          - label: "Posts"
+            name: "posts"
             widget: "list"
             summary: "{{fields.title}}"
-            collapsed: false
+            collapsed: true
             fields:
-              - { label: "ID", name: "id", widget: "string", hint: "Unique slug-like id, e.g. funding-guide-2026" }
+              - { label: "ID", name: "id", widget: "string", required: false, hint: "Keep this short, like post-1" }
               - { label: "Title", name: "title", widget: "string" }
-              - { label: "Category", name: "category", widget: "string", default: "Insights" }
-              - { label: "Excerpt", name: "excerpt", widget: "text" }
-              - { label: "Author", name: "author", widget: "string", default: "Naphtali Bryant" }
-              - { label: "Date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
-              - { label: "Read Time", name: "readTime", widget: "string", default: "5 min read", required: false }
-              - { label: "Featured Image", name: "image", widget: "image", required: false, allow_multiple: false }
-              - { label: "Featured Post", name: "featured", widget: "boolean", default: false, required: false }
-              - { label: "Body", name: "body", widget: "markdown", hint: "Main article content. The updated HTML can render rich body content from this field." }
+              - { label: "Category", name: "category", widget: "string", required: false }
+              - { label: "Excerpt", name: "excerpt", widget: "text", required: false }
+              - { label: "Author", name: "author", widget: "string", required: false }
+              - { label: "Date", name: "date", widget: "string", required: false, hint: "Example: 8 Apr 2026" }
+              - { label: "Image", name: "image", widget: "image", required: false }
+              - { label: "Treat body as HTML", name: "html", widget: "boolean", default: false, required: false }
+              - { label: "Body", name: "body", widget: "markdown", required: false }

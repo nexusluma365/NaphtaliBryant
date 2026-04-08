@@ -1,0 +1,60 @@
+NAPHTALI + SVELTIA CMS SETUP GUIDE
+
+1) Upload this whole project to GitHub.
+   Make sure these are in the root of the repo:
+   - index.html
+   - video-blog (3).html
+   - admin/index.html
+   - admin/config.yml
+   - data/posts.json
+   - netlify.toml
+
+2) IMPORTANT: open admin/config.yml.
+   Replace this line:
+   repo: YOUR_GITHUB_USERNAME/YOUR_REPOSITORY_NAME
+   with your real GitHub repo, for example:
+   repo: tonosound/naphtali-website
+
+3) Push that change to GitHub.
+
+4) In Netlify, connect the site to the SAME GitHub repo.
+   Do not use drag-and-drop only.
+   Use Import from Git.
+
+5) In Netlify, open your site settings and set up GitHub OAuth provider tokens.
+   You will need a GitHub OAuth App because Sveltia CMS does NOT use Git Gateway.
+
+6) In GitHub, create an OAuth App.
+   Homepage URL:
+   https://YOUR-SITE.netlify.app
+
+   Authorization callback URL:
+   https://api.netlify.com/auth/done
+
+7) In Netlify, go to the site's GitHub OAuth provider token settings and connect the OAuth App.
+   This is what allows Sveltia CMS to log in with GitHub on your Netlify site.
+
+8) Redeploy the site.
+
+9) Open:
+   https://YOUR-SITE.netlify.app/admin/
+
+10) Log in with GitHub.
+    You should see the Sveltia CMS dashboard.
+
+11) Open "Blog Posts" and edit the entries in data/posts.json.
+    Save the changes.
+
+12) Netlify will redeploy the site automatically.
+    Refresh the Media Hub page to see the updated blog posts.
+
+HOW THIS VERSION WORKS
+- Videos still use the existing local browser storage logic.
+- Blog posts now load from /data/posts.json.
+- Sveltia CMS edits /data/posts.json through GitHub.
+- The website fetches that file and shows the posts on the blog tab.
+
+IMPORTANT NOTE
+- Sveltia CMS does not support Netlify Git Gateway.
+- Use the GitHub backend instead.
+- That means editors log in with GitHub, not Netlify Identity.

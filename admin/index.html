@@ -1,86 +1,12 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex" />
-  <title>Content Admin</title>
-  <style>
-    :root {
-      --bg: #0b0b0c;
-      --panel: #151517;
-      --text: #f5f5f7;
-      --muted: #a1a1a6;
-      --accent: #c9a84c;
-      --border: rgba(255,255,255,0.08);
-      --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: var(--font);
-      background: radial-gradient(circle at top, rgba(201,168,76,0.10), transparent 28%), var(--bg);
-      color: var(--text);
-      display: grid;
-      place-items: center;
-      padding: 24px;
-    }
-    .shell {
-      width: min(760px, 100%);
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 32px;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.35);
-    }
-    h1 {
-      margin: 0 0 10px;
-      font-size: clamp(28px, 4vw, 42px);
-      letter-spacing: -0.04em;
-    }
-    p {
-      margin: 0 0 14px;
-      color: var(--muted);
-      line-height: 1.7;
-      font-size: 16px;
-    }
-    .note {
-      margin-top: 18px;
-      padding: 16px 18px;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      font-size: 14px;
-    }
-    .note strong { color: var(--accent); }
-    #nc-root {
-      margin-top: 24px;
-      min-height: 120px;
-    }
-  </style>
+  <title>Naphtali Content Dashboard</title>
 </head>
 <body>
-  <main class="shell">
-    <h1>Content Admin</h1>
-    <p>Use this editor to create and manage blog posts for the Netlify version of the site.</p>
-    <p>Images upload to <code>assets/uploads</code>. Posts are saved in <code>data/posts.json</code>.</p>
-    <div class="note"><strong>Note:</strong> Turn on Netlify Identity and Git Gateway in your Netlify dashboard before logging in here.</div>
-    <div id="nc-root"></div>
-  </main>
-
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <script src="https://unpkg.com/decap-cms@^3/dist/decap-cms.js"></script>
-  <script>
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on('init', user => {
-        if (!user) {
-          window.netlifyIdentity.on('login', () => {
-            document.location.href = '/admin/';
-          });
-        }
-      });
-    }
-  </script>
+  <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
 </body>
 </html>

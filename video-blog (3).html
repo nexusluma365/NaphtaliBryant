@@ -2894,119 +2894,57 @@ const DEFAULT_POSTS = [
   }
 ];
 
-const CMS_CONFIG = {
-  enabled: true,
-  postsReadOnly: true,
-  postsEndpoints: [
-    './data/posts.json',
-    '/data/posts.json',
-    './posts.json',
-    '/posts.json',
-    '/api/posts.json',
-    '/.netlify/functions/posts'
-  ]
-};
-
-function loadVideos() {
+function loadData() {
   try {
     const v = localStorage.getItem('untitled_videos');
-    return v ? JSON.parse(v) : [...DEFAULT_VIDEOS];
+    return {
+      videos: v ? JSON.parse(v) : [...DEFAULT_VIDEOS],
+      posts: [...DEFAULT_POSTS]
+    };
   } catch(e) {
-    return [...DEFAULT_VIDEOS];
-  }
-}
-
-function loadLocalPostsFallback() {
-  try {
-    const p = localStorage.getItem('untitled_posts');
-    return p ? JSON.parse(p) : [...DEFAULT_POSTS];
-  } catch(e) {
-    return [...DEFAULT_POSTS];
+    return { videos: [...DEFAULT_VIDEOS], posts: [...DEFAULT_POSTS] };
   }
 }
 
 function saveData(videos, posts) {
   try {
     localStorage.setItem('untitled_videos', JSON.stringify(videos));
-    const blogIsCmsBacked = typeof state !== 'undefined' && state.blogSource === 'cms';
-    if (!(CMS_CONFIG.postsReadOnly && blogIsCmsBacked)) {
-      localStorage.setItem('untitled_posts', JSON.stringify(posts));
-    }
   } catch(e) {}
 }
 
-function normalizePost(post, idx = 0) {
-  const fallbackId = 'p' + Date.now() + '-' + idx;
-  const body = post.body ?? post.content ?? post.html ?? post.description ?? '';
-  const html = !!(post.html === true || post.content_html || post.body_html || post.format === 'html');
-  return {
-    id: post.id || post.slug || fallbackId,
-    slug: post.slug || post.id || fallbackId,
-    title: post.title || 'Untitled Article',
-    category: post.category || post.tag || post.collection || 'Blog',
-    excerpt: post.excerpt || post.summary || post.description || '',
-    body: post.body_html || post.content_html || body,
-    author: post.author || post.writer || post.by || 'Unknown',
-    date: post.date || post.published_at || post.created_at || new Date().toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'}),
-    image: post.image || post.cover || post.thumbnail || post.featured_image || '',
-    featured: !!post.featured,
-    html
-  };
-}
-
-function sortPostsForDisplay(posts) {
-  return [...posts].sort((a, b) => {
-    if (!!a.featured !== !!b.featured) return a.featured ? -1 : 1;
-    const da = Date.parse(a.date || '') || 0;
-    const db = Date.parse(b.date || '') || 0;
-    return db - da;
-  });
-}
-
 async function loadCmsPosts() {
-  if (!CMS_CONFIG.enabled) return null;
+  const candidates = [
+    'data/posts.json',
+    '/data/posts.json'
+  ];
 
-  for (const endpoint of CMS_CONFIG.postsEndpoints) {
+  for (const url of candidates) {
     try {
-      const res = await fetch(endpoint, { cache: 'no-store' });
+      const res = await fetch(url + (url.includes('?') ? '&' : '?') + 'v=' + Date.now(), { cache: 'no-store' });
       if (!res.ok) continue;
-      const payload = await res.json();
-      const rawPosts = Array.isArray(payload) ? payload : (Array.isArray(payload.posts) ? payload.posts : null);
-      if (!rawPosts || !rawPosts.length) continue;
-      return sortPostsForDisplay(rawPosts.map(normalizePost));
-    } catch (err) {}
+      const data = await res.json();
+      const incoming = Array.isArray(data) ? data : (Array.isArray(data.posts) ? data.posts : null);
+      if (!incoming) continue;
+      state.posts = incoming.map((post, index) => ({
+        id: post.id || `post-${index + 1}`,
+        title: post.title || 'Untitled Post',
+        category: post.category || 'Blog',
+        excerpt: post.excerpt || '',
+        body: post.body || '',
+        html: !!post.html,
+        author: post.author || 'Admin',
+        date: post.date || new Date().toLocaleDateString(),
+        image: post.image || ''
+      }));
+      if (currentTab === 'blog') renderBlog();
+      return true;
+    } catch (e) {}
   }
 
-  return null;
+  return false;
 }
 
-function isCmsPostsMode() {
-  return CMS_CONFIG.enabled && state.blogSource === 'cms';
-}
-
-function showCmsReadOnlyToast() {
-  showToast('Blog posts are now managed through your CMS or /admin. This on-page editor is read-only for articles.');
-}
-
-function openCmsAdmin() {
-  window.open('/admin/', '_blank', 'noopener');
-}
-
-let state = {
-  videos: loadVideos(),
-  posts: loadLocalPostsFallback(),
-  blogSource: 'local'
-};
-
-async function hydrateCmsPosts() {
-  const cmsPosts = await loadCmsPosts();
-  if (!cmsPosts) return false;
-  state.posts = cmsPosts;
-  state.blogSource = 'cms';
-  renderBlog();
-  renderManagePosts();
-  return true;
-}
+let state = loadData();
 
 // ══════════════════════════════════════════════
 //  TABS
@@ -3165,12 +3103,6 @@ function readTime(post) {
 function renderBlog() {
   const posts = state.posts;
   if (!posts.length) return;
-
-  const loadMoreBtn = document.getElementById('blogLoadMoreBtn');
-  if (loadMoreBtn && isCmsPostsMode()) {
-    loadMoreBtn.textContent = 'Managed by CMS';
-    loadMoreBtn.style.display = 'none';
-  }
 
   // ── Featured editorial hero ──
   const feat = posts[0];
@@ -3367,11 +3299,6 @@ function exitAdminMode() {
 
 // ── Add panel (slide-up) for adding NEW content ──
 function openAddPanel(type) {
-  if (type === 'post' && isCmsPostsMode()) {
-    showCmsReadOnlyToast();
-    setTimeout(openCmsAdmin, 300);
-    return;
-  }
   document.getElementById('adminOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
   switchAdminTab(type === 'video' ? 'add-video' : 'add-post');
@@ -3535,12 +3462,6 @@ function saveDrawer() {
     renderVideos();
     showToast('✓ Video saved');
   } else if (drawerType === 'post') {
-    if (isCmsPostsMode()) {
-      closeDrawer();
-      showCmsReadOnlyToast();
-      setTimeout(openCmsAdmin, 300);
-      return;
-    }
     const p = state.posts[drawerIdx];
     p.title    = document.getElementById('de-title').value.trim()    || p.title;
     p.category = document.getElementById('de-category').value.trim() || p.category;
@@ -3566,12 +3487,6 @@ function deleteDrawerItem() {
     closeDrawer(); renderVideos();
     showToast('Video deleted');
   } else {
-    if (isCmsPostsMode()) {
-      closeDrawer();
-      showCmsReadOnlyToast();
-      setTimeout(openCmsAdmin, 300);
-      return;
-    }
     state.posts.splice(drawerIdx, 1);
     saveData(state.videos, state.posts);
     closeDrawer(); renderBlog();
@@ -3689,13 +3604,6 @@ function clearVideoForm() {
 }
 
 function savePost() {
-  if (isCmsPostsMode()) {
-    closeAdmin();
-    showCmsReadOnlyToast();
-    setTimeout(openCmsAdmin, 300);
-    return;
-  }
-
   const title = document.getElementById('postTitle').value.trim();
   if (!title) { showToast('Please enter a title'); return; }
 
@@ -3773,24 +3681,11 @@ function deleteVideo(i) {
 
 function renderManagePosts() {
   const list = document.getElementById('managePostList');
-  if (isCmsPostsMode()) {
-    list.innerHTML = `
-      <div class="content-item" style="align-items:flex-start; padding:18px 18px 16px; background:var(--bg-secondary);">
-        <div class="content-item-info" style="white-space:normal;">
-          <div class="content-item-title">Articles are connected to your CMS feed</div>
-          <div class="content-item-meta" style="line-height:1.6; margin-top:6px;">This page is now reading blog posts from your Netlify/CMS source, so add, edit, or delete articles inside your CMS admin instead of this local editor.</div>
-        </div>
-        <div class="content-item-actions">
-          <button class="icon-btn" title="Open CMS" onclick="openCmsAdmin()">↗</button>
-        </div>
-      </div>`;
-    return;
-  } else if (state.posts.length === 0) {
+  if (state.posts.length === 0) {
     list.innerHTML = '<div class="empty-state"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><p>No posts yet. Add one above.</p></div>';
     return;
-  } else {
-    list.innerHTML = '';
   }
+  list.innerHTML = '';
   state.posts.forEach((p, i) => {
     const item = document.createElement('div');
     item.className = 'content-item';
@@ -3811,11 +3706,6 @@ function renderManagePosts() {
 }
 
 function deletePost(i) {
-  if (isCmsPostsMode()) {
-    showCmsReadOnlyToast();
-    setTimeout(openCmsAdmin, 300);
-    return;
-  }
   state.posts.splice(i, 1);
   saveData(state.videos, state.posts);
   renderManagePosts();
@@ -3840,8 +3730,7 @@ function showToast(msg) {
 // ══════════════════════════════════════════════
 renderVideos();
 renderBlog();
-renderManagePosts();
-hydrateCmsPosts();
+loadCmsPosts();
 
 // Animate cards on scroll
 const observer = new IntersectionObserver(entries => {
