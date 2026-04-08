@@ -2,14 +2,14 @@
   "posts": [
     {
       "id": "p0",
-      "title": "Free Money for School Is Real \u2014 Here's Exactly How to Get It",
+      "title": "Free Money for School Is Real — Here's Exactly How to Get It",
       "category": "Student Finance",
-      "excerpt": "Billions of dollars in grant money go unclaimed every single year. The students who graduate debt-free aren\u2019t luckier than you \u2014 they just knew where to look.",
+      "excerpt": "Billions of dollars in grant money go unclaimed every single year. The students who graduate debt-free aren’t luckier than you — they just knew where to look.",
       "author": "Student Success Academy",
       "date": "4 Apr 2025",
       "image": "hero-poster.jpg",
       "html": true,
-      "body": "<div class=\"post-hook\"><p class=\"post-lead\">Let's be direct: college is expensive. Tuition, housing, textbooks, fees \u2014 the cost adds up fast. But grant money is real, and a lot of it goes unclaimed every year.</p><div class=\"post-callout\"><span class=\"callout-icon\">\ud83d\udca1</span><div><strong>Grants are not loans.</strong><p>That means qualified students do not pay them back. The goal is to know where to look, apply early, and stay organized.</p></div></div><p>Start with the FAFSA, then check state grants, school aid, and private grant directories. A simple system beats guessing.</p></div><h2 class=\"post-h2\">Start With the FAFSA</h2><p>Federal aid is the first place most students should start. Fill out the FAFSA as early as possible, because some aid is limited and deadlines matter.</p><h2 class=\"post-h2\">Check State and School Aid Too</h2><p>Many students stop after one application. That is a mistake. Your state and your school may each have separate aid programs that can save you thousands.</p><div class=\"post-tip\"><strong>Quick tip:</strong> Search your state name plus the words college grant program and visit the official education website.</div><h2 class=\"post-h2\">Stay Organized</h2><p>Keep a list of deadlines, required forms, essays, and contacts. Students who stay organized usually win more funding than students who wait until the last minute.</p>"
+      "body": "<div class=\"post-hook\"><p class=\"post-lead\">Let's be direct: college is expensive. Tuition, housing, textbooks, fees — the cost adds up fast. But grant money is real, and a lot of it goes unclaimed every year.</p><div class=\"post-callout\"><span class=\"callout-icon\">💡</span><div><strong>Grants are not loans.</strong><p>That means qualified students do not pay them back. The goal is to know where to look, apply early, and stay organized.</p></div></div><p>Start with the FAFSA, then check state grants, school aid, and private grant directories. A simple system beats guessing.</p></div><h2 class=\"post-h2\">Start With the FAFSA</h2><p>Federal aid is the first place most students should start. Fill out the FAFSA as early as possible, because some aid is limited and deadlines matter.</p><h2 class=\"post-h2\">Check State and School Aid Too</h2><p>Many students stop after one application. That is a mistake. Your state and your school may each have separate aid programs that can save you thousands.</p><div class=\"post-tip\"><strong>Quick tip:</strong> Search your state name plus the words college grant program and visit the official education website.</div><h2 class=\"post-h2\">Stay Organized</h2><p>Keep a list of deadlines, required forms, essays, and contacts. Students who stay organized usually win more funding than students who wait until the last minute.</p>"
     },
     {
       "id": "p1",
@@ -43,6 +43,17 @@
       "image": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=900&auto=format&fit=crop&q=75",
       "html": false,
       "body": "Bill Walsh believed that if you set the highest standards in every area of operation, the results would follow. Focus on the process, not the outcome. Build systems, train relentlessly, and trust your team."
+    },
+    {
+      "id": "Test post",
+      "title": "New test section",
+      "category": "Test Category",
+      "excerpt": "",
+      "author": "Admin",
+      "date": "",
+      "image": "/assets/uploads/Screenshot 2026-04-07 at 4.12.59 PM.png",
+      "html": false,
+      "body": "here is a test blog that can be remove but is here to test"
     }
   ]
 }
