@@ -1,0 +1,28 @@
+{
+  "posts": [
+    {
+      "id": "welcome-to-the-media-hub",
+      "title": "Welcome to the Media Hub",
+      "category": "Featured",
+      "excerpt": "This is the starter post for your new Netlify + CMS blog setup. Replace it anytime from /admin.",
+      "author": "Naphtali Bryant",
+      "date": "2026-04-08",
+      "readTime": "3 min read",
+      "image": "",
+      "featured": true,
+      "body": "## Your blog is now CMS-ready\n\nThis starter post lives inside `data/posts.json`, which means the site can load real content instead of relying only on browser storage.\n\n### What to do next\n\n- Log in at `/admin/`\n- Edit this post or add a new one\n- Publish changes through Netlify\n\n### Why this is better\n\nYour content can now be managed in one place and deployed with the rest of the site."
+    },
+    {
+      "id": "how-to-publish-your-next-post",
+      "title": "How to Publish Your Next Post",
+      "category": "Guide",
+      "excerpt": "A simple walk-through for adding titles, images, excerpts, and full article content using the new admin panel.",
+      "author": "Naphtali Bryant",
+      "date": "2026-04-08",
+      "readTime": "4 min read",
+      "image": "",
+      "featured": false,
+      "body": "## Publishing is simple\n\nOpen `/admin/`, sign in, and edit the **Posts Data** entry.\n\n### Recommended workflow\n\n1. Add a clear title\n2. Write a short excerpt\n3. Upload a featured image if needed\n4. Paste the article body\n5. Save and publish\n\nOnce Netlify rebuilds the site, the post should appear in the blog feed."
+    }
+  ]
+}
