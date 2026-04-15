@@ -2227,14 +2227,12 @@
     <span class="brand-wordmark">Naphtali <em>Bryant</em></span>
   </a>
   <div class="nav-tabs">
-    <button class="nav-tab active" onclick="switchTab('videos')"><span class="tab-icon">▶</span> Watch</button>
-    <button class="nav-tab" onclick="switchTab('blog')"><span class="tab-icon">✦</span> Read</button>
-    <button class="nav-tab" onclick="switchTab('about')"><span class="tab-icon">◈</span> About</button>
+    <button class="nav-tab active" onclick="switchTab('about')"><span class="tab-icon">◈</span> About</button>
   </div>
 </nav>
 
 <!-- ═══════════ VIDEOS TAB ═══════════ -->
-<div id="tab-videos" class="tab-panel active">
+<div id="tab-videos" class="tab-panel">
 
   <!-- Featured Video Hero -->
   <div class="featured-hero" id="featuredHero" onclick="playFeatured()">
@@ -2426,45 +2424,34 @@
         <p class="about-eyebrow" style="margin-bottom:8px;">Latest Articles & Insights</p>
         <h2 class="section-title">Explore Thought Leadership</h2>
       </div>
-      <a href="https://naphtalitekoabryant.online/" class="section-link">View all →</a>
+      <a href="https://github.com/nexusluma365/NaphtaliBryant/tree/main/content/posts" class="section-link" target="_blank" rel="noopener noreferrer">View source →</a>
     </div>
-    <div class="video-grid">
-      <div class="video-card" onclick="window.open('https://naphtalitekoabryant.online/2026/04/05/7-mistakes-youre-making-with-your-college-funding-and-how-to-fix-them/','_blank')">
-        <div class="video-thumb-wrap">
-          <img class="video-thumb" src="https://i0.wp.com/naphtalitekoabryant.online/wp-content/uploads/2026/04/4ghqhFOhLrn.webp?fit=300%2C200&ssl=1" alt="College Funding" loading="lazy" decoding="async" onerror="this.style.background='var(--bg-tertiary)'">
-          <div class="video-play-overlay"><div class="mini-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></div>
-        </div>
-        <div class="video-info">
-          <div class="video-category">Education</div>
-          <div class="video-title">7 Mistakes You're Making with Your College Funding (and How to Fix Them)</div>
-          <div class="video-desc">The way we talk about paying for college is broken. We're told to just "study hard" and "apply for a few scholarships"…</div>
-          <div class="video-meta"><div class="avatar">NB</div><span>Naphtali Bryant</span><span>·</span><span>Apr 5, 2026</span></div>
-        </div>
+
+    <div class="featured-article" id="aboutFeaturedEl" style="margin-bottom:30px;">
+      <div class="featured-article-img-wrap">
+        <img class="featured-article-img" id="aboutHeroImg" src="" alt="Featured post" onerror="this.onerror=null;this.src='hero-poster.jpg'">
       </div>
-      <div class="video-card" onclick="window.open('https://naphtalitekoabryant.online/2026/04/04/how-to-choose-the-best-short-term-program-and-avoid-low-value-options/','_blank')">
-        <div class="video-thumb-wrap">
-          <img class="video-thumb" src="https://i0.wp.com/naphtalitekoabryant.online/wp-content/uploads/2026/04/RN2AJKO6ciT.webp?fit=300%2C200&ssl=1" alt="Short-Term Programs" loading="lazy" decoding="async" onerror="this.style.background='var(--bg-tertiary)'">
-          <div class="video-play-overlay"><div class="mini-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></div>
+      <div class="featured-article-body">
+        <div class="article-eyebrow">
+          <span class="article-category" id="aboutHeroCategory">Featured</span>
+          <span class="article-dot">·</span>
+          <span class="article-read-time" id="aboutHeroReadTime">8 min read</span>
         </div>
-        <div class="video-info">
-          <div class="video-category">Career</div>
-          <div class="video-title">How to Choose the Best Short-Term Program (and Avoid Low-Value Options)</div>
-          <div class="video-desc">The education market is flooded. Every time you open LinkedIn or Instagram, you're hit with an ad for a new six-week bootcamp…</div>
-          <div class="video-meta"><div class="avatar">NB</div><span>Naphtali Bryant</span><span>·</span><span>Apr 4, 2026</span></div>
+        <h2 class="featured-article-title" id="aboutHeroTitle">Article Title</h2>
+        <p class="featured-article-excerpt" id="aboutHeroDesc">Excerpt goes here.</p>
+        <div class="article-byline">
+          <div class="byline-avatar" id="aboutHeroAvatar"></div>
+          <div>
+            <div class="byline-name" id="aboutHeroAuthor">Author</div>
+            <div class="byline-date" id="aboutHeroDate">Date</div>
+          </div>
         </div>
+        <button class="read-btn" id="aboutHeroBtn">Read Article →</button>
       </div>
-      <div class="video-card" onclick="window.open('https://naphtalitekoabryant.online/2026/04/03/why-skills-first-hiring-will-change-the-way-you-choose-a-major/','_blank')">
-        <div class="video-thumb-wrap">
-          <img class="video-thumb" src="https://i0.wp.com/naphtalitekoabryant.online/wp-content/uploads/2026/04/LqX9jnWW6Ci.webp?fit=300%2C200&ssl=1" alt="Skills-First Hiring" loading="lazy" decoding="async" onerror="this.style.background='var(--bg-tertiary)'">
-          <div class="video-play-overlay"><div class="mini-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></div>
-        </div>
-        <div class="video-info">
-          <div class="video-category">Leadership</div>
-          <div class="video-title">Why Skills-First Hiring Will Change the Way You Choose a Major</div>
-          <div class="video-desc">For decades, the advice given to students has been the same script: "Pick a major that sounds like a job title."</div>
-          <div class="video-meta"><div class="avatar">NB</div><span>Naphtali Bryant</span><span>·</span><span>Apr 3, 2026</span></div>
-        </div>
-      </div>
+    </div>
+
+    <div class="article-grid" id="aboutBlogGrid">
+      <!-- injected by JS -->
     </div>
   </div>
 
@@ -2925,7 +2912,7 @@ async function loadCmsPosts() {
       const data = await res.json();
       const incoming = Array.isArray(data) ? data : (Array.isArray(data.posts) ? data.posts : null);
       if (!incoming) continue;
-      state.posts = incoming.map((post, index) => ({
+      state.posts = mergePosts(incoming.map((post, index) => ({
         id: post.id || `post-${index + 1}`,
         title: post.title || 'Untitled Post',
         category: post.category || 'Blog',
@@ -2934,14 +2921,138 @@ async function loadCmsPosts() {
         html: !!post.html,
         author: post.author || 'Admin',
         date: post.date || new Date().toLocaleDateString(),
-        image: post.image || ''
-      }));
-      if (currentTab === 'blog') renderBlog();
+        image: post.image || '',
+        source: post.source || 'cms'
+      })), state.posts.filter(post => post.source === 'marblism'));
+      renderBlog();
       return true;
     } catch (e) {}
   }
 
   return false;
+}
+
+async function loadRepoPosts() {
+  const apiUrl = 'https://api.github.com/repos/nexusluma365/NaphtaliBryant/contents/content/posts';
+
+  try {
+    const res = await fetch(apiUrl + '?v=' + Date.now(), {
+      cache: 'no-store',
+      headers: { Accept: 'application/vnd.github+json' }
+    });
+    if (!res.ok) return false;
+
+    const files = await res.json();
+    if (!Array.isArray(files)) return false;
+
+    const markdownFiles = files.filter(file => file.type === 'file' && /\.md$/i.test(file.name));
+    const loaded = await Promise.all(markdownFiles.map(async (file, index) => {
+      try {
+        const contentRes = await fetch((file.download_url || file.url) + ((file.download_url || file.url).includes('?') ? '&' : '?') + 'v=' + Date.now(), { cache: 'no-store' });
+        if (!contentRes.ok) return null;
+        const raw = await contentRes.text();
+        return parseMarkdownPost(raw, file, index);
+      } catch (e) {
+        return null;
+      }
+    }));
+
+    const repoPosts = loaded.filter(Boolean);
+    state.posts = mergePosts(state.posts.filter(post => post.source !== 'marblism'), repoPosts);
+    renderBlog();
+    return repoPosts.length > 0;
+  } catch (e) {
+    return false;
+  }
+}
+
+function parseMarkdownPost(raw, file, index) {
+  const parsed = parseFrontmatter(raw || '');
+  const attrs = parsed.attributes || {};
+  const body = (parsed.body || '').trim();
+  const excerpt = attrs.excerpt || body.split(/\n+/).find(Boolean) || '';
+
+  return {
+    id: file.name || `repo-post-${index + 1}`,
+    title: attrs.title || file.name.replace(/\.md$/i, '').replace(/-/g, ' '),
+    category: attrs.category || 'Blog',
+    excerpt,
+    body,
+    html: false,
+    author: attrs.author || 'Naphtali Bryant',
+    date: formatDisplayDate(attrs.date || file.git_url || ''),
+    image: attrs.image || '',
+    slug: file.name.replace(/\.md$/i, ''),
+    source: 'marblism',
+    repoUrl: file.html_url || ''
+  };
+}
+
+function parseFrontmatter(raw) {
+  if (!raw.startsWith('---')) {
+    return { attributes: {}, body: raw };
+  }
+
+  const match = raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
+  if (!match) {
+    return { attributes: {}, body: raw };
+  }
+
+  const [, frontmatter, body] = match;
+  const attributes = {};
+  let currentListKey = null;
+
+  frontmatter.split('\n').forEach(line => {
+    const listMatch = line.match(/^\s*-\s*(.+)$/);
+    if (listMatch && currentListKey) {
+      if (!Array.isArray(attributes[currentListKey])) attributes[currentListKey] = [];
+      attributes[currentListKey].push(listMatch[1].trim().replace(/^['"]|['"]$/g, ''));
+      return;
+    }
+
+    const keyMatch = line.match(/^([A-Za-z0-9_]+):\s*(.*)$/);
+    if (!keyMatch) return;
+
+    const key = keyMatch[1];
+    const value = keyMatch[2].trim();
+    currentListKey = null;
+
+    if (!value) {
+      attributes[key] = [];
+      currentListKey = key;
+      return;
+    }
+
+    attributes[key] = value.replace(/^['"]|['"]$/g, '');
+  });
+
+  return { attributes, body };
+}
+
+function mergePosts(primaryPosts, secondaryPosts) {
+  const map = new Map();
+
+  [...primaryPosts, ...secondaryPosts].forEach((post, index) => {
+    const key = [post.slug, post.title, post.date].filter(Boolean).join('::') || `post-${index}`;
+    if (!map.has(key) || post.source === 'marblism') {
+      map.set(key, post);
+    }
+  });
+
+  return Array.from(map.values()).sort((a, b) => parseDateValue(b.date) - parseDateValue(a.date));
+}
+
+function parseDateValue(value) {
+  if (!value) return 0;
+  const parsed = new Date(value);
+  if (!isNaN(parsed.getTime())) return parsed.getTime();
+  return 0;
+}
+
+function formatDisplayDate(value) {
+  const timestamp = parseDateValue(value);
+  if (!timestamp) return new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  return new Date(timestamp).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
 let state = loadData();
@@ -2950,17 +3061,17 @@ let state = loadData();
 //  TABS
 // ══════════════════════════════════════════════
 
-let currentTab = 'videos';
+let currentTab = 'about';
 
 function switchTab(tab) {
   currentTab = tab;
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
   document.getElementById('tab-' + tab).classList.add('active');
-  const tabIndex = { videos: 0, blog: 1, about: 2 };
-  document.querySelectorAll('.nav-tab')[tabIndex[tab]].classList.add('active');
+  const activeTab = Array.from(document.querySelectorAll('.nav-tab')).find(node => node.textContent.includes('About'));
+  if (activeTab) activeTab.classList.add('active');
   if (tab === 'videos') renderVideos();
-  else if (tab === 'blog') renderBlog();
+  renderBlog();
 }
 
 // ══════════════════════════════════════════════
@@ -3171,6 +3282,53 @@ function renderBlog() {
     wrap.appendChild(card);
     wrap.appendChild(trig);
     grid.appendChild(wrap);
+  });
+
+  renderAboutPosts();
+}
+
+function renderAboutPosts() {
+  const posts = state.posts;
+  if (!posts.length) return;
+
+  const feat = posts[0];
+  const fallback = 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=900&auto=format&fit=crop&q=80';
+  document.getElementById('aboutHeroImg').src = feat.image || fallback;
+  document.getElementById('aboutHeroImg').alt = feat.title;
+  document.getElementById('aboutHeroCategory').textContent = feat.category || 'Article';
+  document.getElementById('aboutHeroReadTime').textContent = readTime(feat);
+  document.getElementById('aboutHeroTitle').textContent = feat.title;
+  document.getElementById('aboutHeroDesc').textContent = feat.excerpt || '';
+  document.getElementById('aboutHeroAvatar').textContent = feat.author ? feat.author[0] : '?';
+  document.getElementById('aboutHeroAuthor').textContent = feat.author;
+  document.getElementById('aboutHeroDate').textContent = feat.date;
+  document.getElementById('aboutFeaturedEl').onclick = () => openBlogPost(feat);
+  document.getElementById('aboutHeroBtn').onclick = (e) => { e.stopPropagation(); openBlogPost(feat); };
+
+  const grid = document.getElementById('aboutBlogGrid');
+  grid.innerHTML = '';
+  posts.slice(1, 7).forEach((post, index) => {
+    const card = document.createElement('div');
+    card.className = 'article-card';
+    card.style.animationDelay = (index * 0.05) + 's';
+    card.onclick = () => openBlogPost(post);
+    card.innerHTML = `
+      <img class="article-card-img" src="${post.image || fallback}" alt="${post.title}" loading="lazy" decoding="async" onerror="this.src='${fallback}'">
+      <div class="article-card-eyebrow">
+        <span class="article-card-cat">${post.category || 'Article'}</span>
+        <span class="article-card-dot">·</span>
+        <span class="article-card-time">${readTime(post)}</span>
+      </div>
+      <div class="article-card-title">${post.title}</div>
+      <div class="article-card-excerpt">${post.excerpt || ''}</div>
+      <div class="article-card-byline">
+        <div class="article-card-avatar">${post.author ? post.author[0] : '?'}</div>
+        <span class="article-card-author">${post.author}</span>
+        <span class="article-card-sep">·</span>
+        <span class="article-card-date">${post.date}</span>
+      </div>
+    `;
+    grid.appendChild(card);
   });
 }
 
@@ -3591,7 +3749,7 @@ function saveVideo() {
   clearVideoForm();
   showToast('✓ Video published');
   closeAdmin();
-  switchTab('videos');
+  switchTab('about');
 }
 
 function clearVideoForm() {
@@ -3624,7 +3782,7 @@ function savePost() {
   clearPostForm();
   showToast('✓ Post published');
   closeAdmin();
-  switchTab('blog');
+  switchTab('about');
 }
 
 function clearPostForm() {
@@ -3731,6 +3889,8 @@ function showToast(msg) {
 renderVideos();
 renderBlog();
 loadCmsPosts();
+loadRepoPosts();
+switchTab('about');
 
 // Animate cards on scroll
 const observer = new IntersectionObserver(entries => {
