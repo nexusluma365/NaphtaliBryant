@@ -970,6 +970,68 @@
     white-space: pre-wrap;
   }
   .blog-modal-body.rich { white-space: normal; }
+  .honor-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9600;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(7, 7, 8, 0.76);
+    backdrop-filter: blur(14px);
+  }
+  .honor-modal.open { display: flex; }
+  .honor-modal-card {
+    width: min(100%, 620px);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.45);
+    overflow: hidden;
+  }
+  .honor-modal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 22px 24px 0;
+  }
+  .honor-modal-close {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 999px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 22px;
+    cursor: pointer;
+  }
+  .honor-modal-close:hover { background: var(--bg-tertiary); }
+  .honor-modal-body {
+    padding: 20px 24px 28px;
+  }
+  .honor-modal-year {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .honor-modal-title {
+    font-size: clamp(26px, 4vw, 38px);
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+  .honor-modal-desc {
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--text-secondary);
+  }
   .post-lead { font-size: 20px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 28px; }
   .post-callout { display: flex; gap: 16px; align-items: flex-start; background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.18); border-left: 4px solid var(--accent); border-radius: 0 12px 12px 0; padding: 20px 24px; margin: 28px 0; }
   .post-callout-dark { background: #1d1d1f; border-left-color: #f5a623; }
@@ -2145,13 +2207,24 @@
     gap: 20px;
   }
   .about-honor-card {
+    appearance: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    font-family: inherit;
     background: var(--bg-secondary);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 26px;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, transform 0.2s ease, box-shadow 0.2s ease;
   }
-  .about-honor-card:hover { border-color: var(--accent); }
+  .about-honor-card:hover,
+  .about-honor-card:focus-visible {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow-hover);
+    outline: none;
+  }
   .about-honor-year {
     font-size: 11px;
     font-weight: 700;
@@ -2382,36 +2455,36 @@
     <p class="about-eyebrow">• Recognition & Impact</p>
     <h2 class="about-section-title" style="margin-bottom:36px;">Global Leadership Honors</h2>
     <div class="about-honors-grid">
-      <div class="about-honor-card">
+      <button type="button" class="about-honor-card" onclick="openHonorPreview('2020', 'Top 100 Leaders in Education', 'Recognized globally for innovative approaches to education and student success initiatives.')">
         <div class="about-honor-year">2020</div>
         <h3 class="about-honor-title">Top 100 Leaders in Education</h3>
         <p class="about-honor-desc">Recognized globally for innovative approaches to education and student success initiatives.</p>
-      </div>
-      <div class="about-honor-card">
+      </button>
+      <button type="button" class="about-honor-card" onclick="openHonorPreview('2022', 'NISOD Excellence Award', 'Honored for outstanding contributions to teaching, learning, and leadership excellence.')">
         <div class="about-honor-year">2022</div>
         <h3 class="about-honor-title">NISOD Excellence Award</h3>
         <p class="about-honor-desc">Honored for outstanding contributions to teaching, learning, and leadership excellence.</p>
-      </div>
-      <div class="about-honor-card">
+      </button>
+      <button type="button" class="about-honor-card" onclick="openHonorPreview('2023', 'Outstanding Intrapreneur', 'Global Intrapreneurs Institute in Australia — innovation in the not-for-profit sector.')">
         <div class="about-honor-year">2023</div>
         <h3 class="about-honor-title">Outstanding Intrapreneur</h3>
         <p class="about-honor-desc">Global Intrapreneurs Institute in Australia — innovation in the not-for-profit sector.</p>
-      </div>
-      <div class="about-honor-card">
+      </button>
+      <button type="button" class="about-honor-card" onclick="openHonorPreview('Speaking', 'International Speaker', 'Featured speaker at University of Tolima in Colombia, sharing strategies for educational success.')">
         <div class="about-honor-year">Speaking</div>
         <h3 class="about-honor-title">International Speaker</h3>
         <p class="about-honor-desc">Featured speaker at University of Tolima in Colombia, sharing strategies for educational success.</p>
-      </div>
-      <div class="about-honor-card">
+      </button>
+      <button type="button" class="about-honor-card" onclick="openHonorPreview('Mentorship', 'Mentorship Leader', 'Mentored African American men through Leaders of the Free World program in Ghana.')">
         <div class="about-honor-year">Mentorship</div>
         <h3 class="about-honor-title">Mentorship Leader</h3>
         <p class="about-honor-desc">Mentored African American men through Leaders of the Free World program in Ghana.</p>
-      </div>
-      <div class="about-honor-card">
+      </button>
+      <button type="button" class="about-honor-card" onclick="openHonorPreview('2024', 'Marquis Who\\'s Who', 'Named Honoree Listee, recognizing significant contributions to education and leadership.')">
         <div class="about-honor-year">2024</div>
         <h3 class="about-honor-title">Marquis Who's Who</h3>
         <p class="about-honor-desc">Named Honoree Listee, recognizing significant contributions to education and leadership.</p>
-      </div>
+      </button>
     </div>
   </div>
 
@@ -2646,6 +2719,20 @@
     </div>
     <img class="blog-modal-hero-img" id="modalPostImage" src="" alt="">
     <div class="blog-modal-body" id="modalPostBody"></div>
+  </div>
+</div>
+
+<!-- ═══════════ HONOR PREVIEW MODAL ═══════════ -->
+<div class="honor-modal" id="honorModal" onclick="handleHonorModalClick(event)">
+  <div class="honor-modal-card">
+    <div class="honor-modal-head">
+      <span class="honor-modal-year" id="honorModalYear"></span>
+      <button type="button" class="honor-modal-close" onclick="closeHonorPreview()" aria-label="Close honor preview">✕</button>
+    </div>
+    <div class="honor-modal-body">
+      <h2 class="honor-modal-title" id="honorModalTitle"></h2>
+      <div class="honor-modal-desc" id="honorModalDesc"></div>
+    </div>
   </div>
 </div>
 
@@ -3359,6 +3446,25 @@ function closeBlogModal() {
   document.body.style.overflow = '';
 }
 
+function openHonorPreview(year, title, description) {
+  document.getElementById('honorModalYear').textContent = year || '';
+  document.getElementById('honorModalTitle').textContent = title || '';
+  document.getElementById('honorModalDesc').textContent = description || '';
+  document.getElementById('honorModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeHonorPreview() {
+  document.getElementById('honorModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleHonorModalClick(event) {
+  if (event.target === document.getElementById('honorModal')) {
+    closeHonorPreview();
+  }
+}
+
 // ══════════════════════════════════════════════
 //  TERMINAL AUTH
 // ══════════════════════════════════════════════
@@ -3373,6 +3479,7 @@ document.addEventListener('keydown', e => {
     if (document.getElementById('editDrawer').classList.contains('open')) { closeDrawer(); return; }
     if (document.getElementById('videoModal').classList.contains('open')) { closeVideoModal(); return; }
     if (document.getElementById('blogModal').classList.contains('open')) { closeBlogModal(); return; }
+    if (document.getElementById('honorModal').classList.contains('open')) { closeHonorPreview(); return; }
     if (document.getElementById('terminalOverlay').classList.contains('open')) { closeTerminal(); return; }
     if (document.getElementById('adminOverlay').classList.contains('open')) { closeAdmin(); return; }
   }
