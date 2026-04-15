@@ -667,18 +667,26 @@
 
     .video-content-box {
       display: grid;
-      grid-template-columns: minmax(0, 1.25fr) minmax(320px, .75fr);
-      gap: 1px;
-      background: var(--sep);
-      border: 1px solid var(--sep);
-      border-radius: 6px;
-      overflow: hidden;
+      gap: 24px;
       margin-top: clamp(32px, 5vw, 52px);
+    }
+    .video-intro {
+      max-width: 860px;
+    }
+    .video-intro .eyebrow { margin-bottom: 16px; }
+    .video-intro h3 {
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      line-height: 1.04;
+      letter-spacing: -.035em;
+      color: var(--t1);
     }
     .video-stage {
       position: relative;
       min-height: 540px;
       background: #050505;
+      border: 1px solid var(--sep);
+      border-radius: 6px;
+      overflow: hidden;
     }
     .video-stage::after {
       content: "";
@@ -695,38 +703,14 @@
       display: block;
       object-fit: cover;
     }
-    .video-copy {
-      background: var(--bg-4);
-      padding: clamp(32px, 4vw, 48px);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+    .video-caption {
+      max-width: 860px;
     }
-    .video-copy .eyebrow { margin-bottom: 16px; }
-    .video-copy h3 {
-      font-size: clamp(1.5rem, 3vw, 2.5rem);
-      line-height: 1.04;
-      letter-spacing: -.035em;
-      color: var(--t1);
-      margin-bottom: 18px;
-    }
-    .video-copy p {
+    .video-caption p {
       font-size: clamp(.92rem, 1.35vw, 1rem);
       line-height: 1.82;
       color: var(--t2);
-      margin-bottom: 16px;
-    }
-    .video-points {
-      display: grid;
-      gap: 10px;
-      margin: 8px 0 26px;
-    }
-    .video-points span {
-      display: block;
-      font-size: .82rem;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      color: var(--gold);
+      margin-bottom: 20px;
     }
 
     /* ─────────────────────────────────────────
@@ -1123,8 +1107,7 @@
     /* Firefox: -webkit-text-fill-color is unreliable; fall back to solid gold */
     @supports not (-webkit-text-fill-color: transparent) {
       .headline em,
-      .cta-headline em,
-      .video-copy h3 em {
+      .cta-headline em {
         background: none !important;
         -webkit-text-fill-color: unset !important;
         color: var(--gold-hi);
@@ -1208,7 +1191,6 @@
       /* Grants intro — stack */
       .grants-intro { grid-template-columns: 1fr; gap: 32px; }
 
-      .video-content-box { grid-template-columns: 1fr; }
       .video-stage { min-height: 320px; }
 
       /* Steps — 1 col */
@@ -1423,20 +1405,18 @@
     </div>
 
     <div class="video-content-box rev">
+      <div class="video-intro">
+        <p class="eyebrow">Video Content</p>
+        <h3>Learn How to Get Free Tuition in my Latest Interview</h3>
+      </div>
+
       <div class="video-stage">
         <video class="deferred-video" muted loop playsinline preload="none" poster="hero-poster.jpg">
           <source data-src="INtrapreneur-optimized.mp4" type="video/mp4"/>
         </video>
       </div>
-      <div class="video-copy">
-        <p class="eyebrow">Video Content</p>
-        <h3>Watch The Message.<br><em>Then Take the Next Step.</em></h3>
-        <p>This is more than motivation. It is a practical path for students who want to stop relying on debt and start learning how funding really works.</p>
-        <div class="video-points">
-          <span>Step-by-Step Grant Guidance</span>
-          <span>Clear Funding Strategy</span>
-          <span>Debt-Free College Focus</span>
-        </div>
+
+      <div class="video-caption">
         <p>Inside the free Skool community, we break the process down, show you where to apply, how to increase your chances of approval, and how to stack multiple grants together to lower what you pay for school.</p>
         <a href="https://www.skool.com/spark-ed-university-5652/about?ref=5ebca8ecda924bbe80b9423662b6a023" target="_blank" rel="noopener" class="btn btn-fill btn-join-community" style="align-self:flex-start;">Join Our Community →</a>
       </div>
