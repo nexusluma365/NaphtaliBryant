@@ -1,5 +1,14 @@
 [build]
   publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+[[redirects]]
+  from = "/api/publish"
+  to = "/.netlify/functions/marblism-bridge"
+  status = 200
 
 [[headers]]
   for = "/*.html"
@@ -33,3 +42,10 @@
   [headers.values]
     Cache-Control = "no-cache, no-store, must-revalidate"
     Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

@@ -1,0 +1,17 @@
+{
+  "name": "naphtali-bryant-blog",
+  "version": "1.0.0",
+  "description": "Blog site with Marblism to GitHub to Netlify automation bridge",
+  "private": true,
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "dev": "netlify dev",
+    "test:bridge": "node scripts/test-bridge.js",
+    "test:curl": "bash scripts/test-curl.sh"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  }
+}
