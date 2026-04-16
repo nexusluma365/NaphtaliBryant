@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Marblism Bridge — Fixed Netlify Structure
 
 This package has been restructured so Netlify can resolve the bridge function and its utility imports correctly.
@@ -5,6 +6,15 @@ This package has been restructured so Netlify can resolve the bridge function an
 ## Correct structure
 
 ```
+=======
+# Marblism Bridge Integration
+
+This project now includes the fixed Netlify function structure for the Marblism publishing bridge.
+
+## Added structure
+
+```text
+>>>>>>> 6a4f02f89accc29c73e426a28dee055734008c15
 netlify/
   functions/
     marblism-bridge.js
@@ -18,6 +28,7 @@ netlify/
 scripts/
   test-bridge.js
   test-curl.sh
+<<<<<<< HEAD
 netlify.toml
 package.json
 .env.example
@@ -38,6 +49,13 @@ Those files were originally at the project root, which causes module resolution 
 ## Before deploying
 
 Set these Netlify environment variables:
+=======
+```
+
+## Netlify environment variables
+
+Required:
+>>>>>>> 6a4f02f89accc29c73e426a28dee055734008c15
 
 - `WEBHOOK_SECRET`
 - `GITHUB_TOKEN`
@@ -51,7 +69,14 @@ Optional:
 - `DRAFT_BY_DEFAULT`
 - `LOG_LEVEL`
 
+<<<<<<< HEAD
 ## Function endpoint
 
 - `/.netlify/functions/marblism-bridge`
 - `/api/publish` (via redirect in `netlify.toml`)
+=======
+## Function endpoints
+
+- `/.netlify/functions/marblism-bridge`
+- `/api/publish`
+>>>>>>> 6a4f02f89accc29c73e426a28dee055734008c15

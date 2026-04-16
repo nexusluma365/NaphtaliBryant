@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+backend:
+  name: github
+  repo: nexusluma365/NaphtaliBryant
+  branch: main
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+collections:
+  - name: "site_content"
+    label: "Content Dashboard"
+    icon: "dashboard"
+    files:
+      - name: "blog_posts"
+        label: "Blog Posts"
+        file: "data/posts.json"
+        description: "Edit the posts shown on the Media Hub page."
+        fields:
+          - label: "Posts"
+            name: "posts"
+            widget: "list"
+            summary: "{{fields.title}}"
+            collapsed: true
+            fields:
+              - { label: "ID", name: "id", widget: "string", required: false, hint: "Keep this short, like post-1" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Category", name: "category", widget: "string", required: false }
+              - { label: "Excerpt", name: "excerpt", widget: "text", required: false }
+              - { label: "Author", name: "author", widget: "string", required: false }
+              - { label: "Date", name: "date", widget: "string", required: false, hint: "Example: 8 Apr 2026" }
+              - { label: "Image", name: "image", widget: "image", required: false }
+              - { label: "Treat body as HTML", name: "html", widget: "boolean", default: false, required: false }
+              - { label: "Body", name: "body", widget: "markdown", required: false }

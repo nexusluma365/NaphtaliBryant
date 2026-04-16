@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // ─────────────────────────────────────────────────────────────────────────────
 // utils/githubApi.js
 //
@@ -29,10 +30,13 @@
 //   GITHUB_BRANCH  — defaults to "main"
 // ─────────────────────────────────────────────────────────────────────────────
 
+=======
+>>>>>>> 6a4f02f89accc29c73e426a28dee055734008c15
 "use strict";
 
 const GITHUB_API_BASE = "https://api.github.com";
 
+<<<<<<< HEAD
 // ─────────────────────────────────────────────────────────────────────────────
 // Public API
 // ─────────────────────────────────────────────────────────────────────────────
@@ -56,12 +60,18 @@ async function getFileSha(filePath) {
     `${GITHUB_API_BASE}/repos/${owner}/${repo}/contents/${filePath}?ref=${branch}`;
 
   console.log(`[githubApi] Checking existence: ${url}`);
+=======
+async function getFileSha(filePath) {
+  const { owner, repo, branch, token } = getConfig();
+  const url = `${GITHUB_API_BASE}/repos/${owner}/${repo}/contents/${filePath}?ref=${branch}`;
+>>>>>>> 6a4f02f89accc29c73e426a28dee055734008c15
 
   const response = await fetch(url, {
     method: "GET",
     headers: buildHeaders(token),
   });
 
+<<<<<<< HEAD
   // 404 is the expected response when the file doesn't exist — that's not an error.
   if (response.status === 404) {
     console.log(`[githubApi] File not found (404) — this is a new post, proceeding.`);
@@ -69,6 +79,12 @@ async function getFileSha(filePath) {
   }
 
   // Any other non-2xx status is a real problem.
+=======
+  if (response.status === 404) {
+    return null;
+  }
+
+>>>>>>> 6a4f02f89accc29c73e426a28dee055734008c15
   if (!response.ok) {
     const errorBody = await response.text();
     throw new Error(
@@ -80,6 +96,7 @@ async function getFileSha(filePath) {
   }
 
   const data = await response.json();
+<<<<<<< HEAD
   console.log(`[githubApi] File exists — SHA: ${data.sha}`);
   return data.sha; // e.g. "abc123def456..."
 }
@@ -128,6 +145,28 @@ async function commitMarkdownFile(filePath, markdownContent, commitMessage, exis
 
   const response = await fetch(url, {
     method:  "PUT",  // GitHub uses PUT for both create and update
+=======
+  return data.sha;
+}
+
+async function commitMarkdownFile(filePath, markdownContent, commitMessage, existingSha) {
+  const { owner, repo, branch, token } = getConfig();
+  const url = `${GITHUB_API_BASE}/repos/${owner}/${repo}/contents/${filePath}`;
+  const contentBase64 = Buffer.from(markdownContent, "utf-8").toString("base64");
+
+  const body = {
+    message: commitMessage,
+    content: contentBase64,
+    branch,
+  };
+
+  if (existingSha) {
+    body.sha = existingSha;
+  }
+
+  const response = await fetch(url, {
+    method: "PUT",
+>>>>>>> 6a4f02f89accc29c73e426a28dee055734008c15
     headers: {
       ...buildHeaders(token),
       "Content-Type": "application/json",
@@ -142,6 +181,7 @@ async function commitMarkdownFile(filePath, markdownContent, commitMessage, exis
       `  Status: ${response.status}\n` +
       `  Path: ${filePath}\n` +
       `  Response: ${errorBody}\n` +
+<<<<<<< HEAD
       `  Hint: Check that GITHUB_TOKEN has the "repo" scope and the branch "${branch}" exists.`
     );
   }
@@ -166,19 +206,37 @@ function getConfig() {
   const token  = process.env.GITHUB_TOKEN;
   const owner  = process.env.GITHUB_OWNER  || "nexusluma365";
   const repo   = process.env.GITHUB_REPO   || "NaphtaliBryant";
+=======
+      `  Hint: Check that GITHUB_TOKEN has the repo scope and the branch "${branch}" exists.`
+    );
+  }
+
+  return response.json();
+}
+
+function getConfig() {
+  const token = process.env.GITHUB_TOKEN;
+  const owner = process.env.GITHUB_OWNER || "nexusluma365";
+  const repo = process.env.GITHUB_REPO || "NaphtaliBryant";
+>>>>>>> 6a4f02f89accc29c73e426a28dee055734008c15
   const branch = process.env.GITHUB_BRANCH || "main";
 
   if (!token) {
     throw new Error(
       "GITHUB_TOKEN environment variable is not set.\n" +
+<<<<<<< HEAD
       "Go to Netlify → Site settings → Environment variables and add it.\n" +
       "Generate a token at: https://github.com/settings/tokens (needs 'repo' scope)"
+=======
+      "Add it in Netlify site settings or a local .env file."
+>>>>>>> 6a4f02f89accc29c73e426a28dee055734008c15
     );
   }
 
   return { token, owner, repo, branch };
 }
 
+<<<<<<< HEAD
 /**
  * Returns the standard headers needed for every GitHub API request.
  *
@@ -191,6 +249,14 @@ function buildHeaders(token) {
     "Accept":               "application/vnd.github+json",
     "X-GitHub-Api-Version": "2022-11-28",
     "User-Agent":           "marblism-bridge/1.0",
+=======
+function buildHeaders(token) {
+  return {
+    Authorization: `Bearer ${token}`,
+    Accept: "application/vnd.github+json",
+    "X-GitHub-Api-Version": "2022-11-28",
+    "User-Agent": "marblism-bridge/1.0",
+>>>>>>> 6a4f02f89accc29c73e426a28dee055734008c15
   };
 }
 

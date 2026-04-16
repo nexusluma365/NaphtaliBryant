@@ -1,0 +1,4046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>Naphtali Bryant — Media Hub</title>
+<style>
+  :root {
+    --bg: #000000;
+    --bg-secondary: #141414;
+    --bg-tertiary: #1c1c1e;
+    --text-primary: #f5f5f7;
+    --text-secondary: #a1a1a6;
+    --text-tertiary: #636366;
+    --accent: #c9a84c;
+    --accent-hover: #e3c876;
+    --border: rgba(255,255,255,0.08);
+    --border-strong: rgba(255,255,255,0.14);
+    --card-shadow: 0 12px 34px rgba(0,0,0,0.28);
+    --card-shadow-hover: 0 24px 64px rgba(0,0,0,0.44);
+    --radius: 18px;
+    --radius-sm: 10px;
+    --radius-lg: 28px;
+    --nav-height: 52px;
+    --font: -apple-system, "SF Pro Display", "SF Pro Text", BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: var(--nav-height);
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    gap: 0;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+    margin-right: auto;
+  }
+
+  .nav-logo em {
+    color: var(--accent);
+    font-style: normal;
+  }
+
+  .brand-mark {
+    width: 28px;
+    height: 28px;
+    border-radius: 9px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)) padding-box,
+      linear-gradient(135deg, rgba(201,168,76,0.9), rgba(227,200,118,0.42)) border-box;
+    border: 1px solid transparent;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.08),
+      0 8px 18px rgba(0,0,0,0.18);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    color: var(--text-primary);
+  }
+
+  .brand-wordmark {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.25em;
+    white-space: nowrap;
+  }
+
+  .nav-tabs {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    background: var(--bg-tertiary);
+    border-radius: 10px;
+    padding: 3px;
+  }
+
+  .nav-tab {
+    padding: 5px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.18s ease;
+    border: none;
+    background: transparent;
+    letter-spacing: -0.01em;
+    user-select: none;
+  }
+
+  .nav-tab.active {
+    background: var(--bg);
+    color: var(--text-primary);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.12), 0 0 0 0.5px rgba(0,0,0,0.08);
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+  }
+
+  .btn {
+    padding: 7px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    border: none;
+    letter-spacing: -0.01em;
+    font-family: var(--font);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-primary);
+  }
+  .btn-ghost:hover { background: var(--bg-secondary); }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-primary:hover { background: var(--accent-hover); }
+
+  /* ── MAIN ── */
+  main { min-height: calc(100vh - var(--nav-height)); }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── FEATURED VIDEO ── */
+  .featured-hero {
+    --hero-media-offset-y: 0px;
+    position: relative;
+    width: 100%;
+    background: #000;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .featured-hero-inner {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/8.5;
+    max-height: 36vh;
+    overflow: hidden;
+    padding: clamp(14px, 2vw, 24px);
+    background:
+      radial-gradient(circle at top, rgba(201,168,76,0.1), transparent 44%),
+      linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+  }
+
+  .featured-hero-inner iframe,
+  .featured-hero-inner video {
+    position: absolute;
+    inset: clamp(14px, 2vw, 24px);
+    width: calc(100% - (clamp(14px, 2vw, 24px) * 2));
+    height: calc(100% - (clamp(14px, 2vw, 24px) * 2));
+    border: none;
+    object-fit: contain;
+    object-position: center center;
+    border-radius: calc(var(--radius-lg) - 6px);
+    background: #000;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.34);
+    transform: translate3d(0, var(--hero-media-offset-y), 0);
+  }
+
+  .featured-hero-thumb {
+    position: absolute;
+    inset: clamp(14px, 2vw, 24px);
+    width: calc(100% - (clamp(14px, 2vw, 24px) * 2));
+    height: calc(100% - (clamp(14px, 2vw, 24px) * 2));
+    object-fit: contain;
+    object-position: center center;
+    border-radius: calc(var(--radius-lg) - 6px);
+    background: #000;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.34);
+    transform: translate3d(0, var(--hero-media-offset-y), 0);
+    transition: transform 0.6s ease;
+  }
+
+  .featured-hero:hover .featured-hero-thumb { transform: translate3d(0, var(--hero-media-offset-y), 0) scale(1.01); }
+
+  .featured-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.28) 55%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 48px 56px;
+    pointer-events: none;
+  }
+
+  .featured-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 14px;
+  }
+
+  .featured-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #ff453a;
+    display: inline-block;
+    box-shadow: 0 0 0 3px rgba(255,69,58,0.28);
+    animation: pulse 2s ease infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 3px rgba(255,69,58,0.28); }
+    50% { box-shadow: 0 0 0 6px rgba(255,69,58,0.12); }
+  }
+
+  .featured-title {
+    font-size: clamp(26px, 4vw, 52px);
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    max-width: 720px;
+    margin-bottom: 14px;
+  }
+
+  .featured-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 14px;
+    color: rgba(255,255,255,0.65);
+  }
+
+  .featured-author-img {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.4);
+    object-fit: cover;
+  }
+
+  .play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(12px);
+    border: 1.5px solid rgba(255,255,255,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.22s ease;
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  .featured-hero:hover .play-btn { opacity: 1; transform: translate(-50%,-50%) scale(1.06); }
+
+  .play-btn svg { color: #fff; margin-left: 3px; }
+
+  /* ── VIDEO GRID ── */
+  .section { padding: 64px 48px; }
+  .section-sm { padding: 48px 48px; }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 32px;
+  }
+
+  .section-title {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+  }
+
+  .section-link {
+    font-size: 14px;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .section-link:hover { text-decoration: underline; }
+
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+
+  @media (max-width: 900px) {
+    .video-grid { grid-template-columns: repeat(2, 1fr); }
+    .section { padding: 48px 24px; }
+  }
+  @media (max-width: 600px) {
+    .video-grid { grid-template-columns: 1fr; }
+    .section { padding: 32px 16px; }
+  }
+
+  .video-card {
+    background: var(--bg);
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: all 0.24s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: pointer;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .video-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--card-shadow-hover);
+    border-color: transparent;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .video-thumb-wrap {
+    position: relative;
+    aspect-ratio: 16/9;
+    background: var(--bg-secondary);
+    overflow: hidden;
+  }
+
+  .video-thumb {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+    display: block;
+  }
+
+  .video-card:hover .video-thumb { transform: scale(1.04); }
+
+  .video-duration {
+    position: absolute;
+    bottom: 10px; right: 10px;
+    background: rgba(0,0,0,0.76);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 5px;
+    letter-spacing: 0.01em;
+    backdrop-filter: blur(4px);
+  }
+
+  .video-play-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0);
+    transition: background 0.2s ease;
+  }
+
+  .video-card:hover .video-play-overlay { background: rgba(0,0,0,0.2); }
+
+  .mini-play {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.2s ease;
+  }
+
+  .video-card:hover .mini-play { opacity: 1; transform: scale(1); }
+
+  .mini-play svg { color: #000; margin-left: 2px; }
+
+  .video-info {
+    padding: 16px 18px 18px;
+  }
+
+  .video-category {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 7px;
+  }
+
+  .video-title {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.35;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .video-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 14px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .video-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-tertiary);
+  }
+
+  .avatar {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--bg-tertiary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* ── BLOG TAB (editorial styles injected above) ── */
+
+  /* ── TERMINAL MODAL ── */
+  .terminal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.72);
+    backdrop-filter: blur(8px);
+    z-index: 9000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.18s ease;
+  }
+  .terminal-overlay.open { display: flex; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .terminal {
+    width: 540px;
+    background: #1c1c1e;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 0.5px rgba(255,255,255,0.08);
+    animation: slideUp 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(24px) scale(0.97); opacity: 0; }
+    to { transform: translateY(0) scale(1); opacity: 1; }
+  }
+
+  .terminal-bar {
+    background: #2c2c2e;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot-red { background: #ff5f57; }
+  .dot-yellow { background: #febc2e; }
+  .dot-green { background: #28c840; }
+
+  .terminal-title {
+    flex: 1;
+    text-align: center;
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+    font-family: "SF Mono", "Fira Code", Menlo, monospace;
+    letter-spacing: 0.01em;
+  }
+
+  .terminal-body {
+    padding: 24px;
+    font-family: "SF Mono", "Fira Code", Menlo, Courier, monospace;
+    font-size: 13.5px;
+    min-height: 180px;
+  }
+
+  .terminal-line {
+    color: #32d74b;
+    margin-bottom: 6px;
+    white-space: pre;
+  }
+
+  .terminal-prompt-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .terminal-prompt { color: #32d74b; flex-shrink: 0; }
+
+  .terminal-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-family: inherit;
+    font-size: 13.5px;
+    width: 100%;
+    caret-color: #fff;
+    letter-spacing: 0.08em;
+  }
+
+  .terminal-error { color: #ff453a; margin-top: 8px; font-size: 12.5px; }
+  .terminal-success { color: #32d74b; margin-top: 8px; font-size: 12.5px; }
+
+  /* ── ADMIN PANEL ── */
+  .admin-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 8000;
+    display: none;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(6px);
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0;
+  }
+  .admin-overlay.open { display: flex; }
+
+  .admin-panel {
+    width: 100%;
+    max-width: 820px;
+    max-height: 90vh;
+    background: var(--bg);
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -12px 48px rgba(0,0,0,0.18);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    animation: slidePanel 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
+    margin: 0 auto;
+  }
+
+  @keyframes slidePanel {
+    from { transform: translateY(60px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .admin-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 28px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .admin-title {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .admin-close {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--bg-tertiary);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: var(--text-secondary);
+    transition: all 0.15s;
+    font-family: var(--font);
+  }
+  .admin-close:hover { background: var(--bg-secondary); color: var(--text-primary); }
+
+  .admin-tabs {
+    display: flex;
+    gap: 0;
+    padding: 16px 28px 0;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .admin-tab {
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: all 0.15s;
+    font-family: var(--font);
+  }
+  .admin-tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  .admin-body {
+    overflow-y: auto;
+    flex: 1;
+    padding: 28px;
+  }
+
+  .form-group { margin-bottom: 20px; }
+
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 7px;
+    letter-spacing: -0.01em;
+  }
+
+  input[type="text"], input[type="url"], textarea, select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    font-family: var(--font);
+    font-size: 14px;
+    color: var(--text-primary);
+    background: var(--bg);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  input[type="text"]:focus, input[type="url"]:focus, textarea:focus, select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0,113,227,0.12);
+  }
+
+  textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
+
+  .radio-group {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .radio-opt {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 16px;
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    user-select: none;
+  }
+  .radio-opt.selected {
+    border-color: var(--accent);
+    background: rgba(0,113,227,0.06);
+    color: var(--accent);
+  }
+
+  .file-drop {
+    border: 2px dashed var(--border-strong);
+    border-radius: var(--radius-sm);
+    padding: 32px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--bg-secondary);
+  }
+  .file-drop:hover, .file-drop.dragover {
+    border-color: var(--accent);
+    background: rgba(0,113,227,0.04);
+  }
+  .file-drop p { font-size: 13.5px; color: var(--text-secondary); margin-top: 8px; }
+  .file-drop span { font-size: 12px; color: var(--text-tertiary); }
+
+  .content-list { display: flex; flex-direction: column; gap: 12px; }
+
+  .content-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    transition: all 0.15s;
+  }
+  .content-item:hover { border-color: var(--border-strong); background: var(--bg-secondary); }
+
+  .content-item-thumb {
+    width: 80px;
+    height: 50px;
+    border-radius: 6px;
+    background: var(--bg-tertiary);
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .content-item-info { flex: 1; min-width: 0; }
+  .content-item-title { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .content-item-meta { font-size: 12px; color: var(--text-tertiary); }
+
+  .content-item-actions { display: flex; gap: 6px; flex-shrink: 0; }
+
+  .icon-btn {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    border: 1px solid var(--border-strong);
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    font-family: var(--font);
+    color: var(--text-secondary);
+  }
+  .icon-btn:hover { background: var(--bg-secondary); color: var(--text-primary); }
+  .icon-btn.danger:hover { background: #fff0ef; color: #ff3b30; border-color: #ff3b30; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .thumb-preview {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: var(--radius-sm);
+    background: var(--bg-secondary);
+    object-fit: cover;
+    display: none;
+    border: 1px solid var(--border);
+    margin-top: 8px;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 48px 0;
+    color: var(--text-tertiary);
+    font-size: 14px;
+  }
+  .empty-state svg { margin-bottom: 12px; opacity: 0.35; }
+
+  /* ── VIDEO MODAL ── */
+  .video-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9500;
+    background: rgba(0,0,0,0.88);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .video-modal.open { display: flex; }
+
+  .video-modal-inner {
+    width: 100%;
+    max-width: 900px;
+    position: relative;
+  }
+
+  .video-modal-close {
+    position: absolute;
+    top: -44px;
+    right: 0;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font);
+    transition: background 0.15s;
+  }
+  .video-modal-close:hover { background: rgba(255,255,255,0.25); }
+
+  .video-modal-player {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+  }
+
+  .video-modal-player iframe,
+  .video-modal-player video {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
+  .video-modal-title {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-top: 18px;
+  }
+
+  .video-modal-meta {
+    color: rgba(255,255,255,0.55);
+    font-size: 13px;
+    margin-top: 6px;
+  }
+
+  /* ── BLOG POST MODAL ── */
+  .blog-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9500;
+    background: var(--bg);
+    display: none;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .blog-modal.open { display: flex; }
+
+  .blog-modal-nav {
+    position: sticky;
+    top: 0;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 48px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    z-index: 1;
+  }
+
+  .blog-modal-back {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--accent);
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: var(--font);
+  }
+
+  .blog-modal-content {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 64px 48px 96px;
+    width: 100%;
+  }
+
+  .blog-modal-category {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  .blog-modal-title {
+    font-size: clamp(28px, 4vw, 46px);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    margin-bottom: 18px;
+    color: var(--text-primary);
+  }
+
+  .blog-modal-author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 40px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .blog-modal-author-name { font-size: 14px; font-weight: 600; }
+  .blog-modal-author-date { font-size: 13px; color: var(--text-tertiary); }
+
+  .blog-modal-hero-img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    border-radius: var(--radius);
+    margin-bottom: 40px;
+    background: var(--bg-secondary);
+    display: block;
+  }
+
+  .blog-modal-body {
+    font-size: 18px;
+    line-height: 1.75;
+    color: var(--text-primary);
+    white-space: pre-wrap;
+  }
+  .blog-modal-body.rich { white-space: normal; }
+  .honor-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9600;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(7, 7, 8, 0.76);
+    backdrop-filter: blur(14px);
+  }
+  .honor-modal.open { display: flex; }
+  .honor-modal-card {
+    width: min(100%, 620px);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.45);
+    overflow: hidden;
+  }
+  .honor-modal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 22px 24px 0;
+  }
+  .honor-modal-close {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 999px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 22px;
+    cursor: pointer;
+  }
+  .honor-modal-close:hover { background: var(--bg-tertiary); }
+  .honor-modal-body {
+    padding: 20px 24px 28px;
+  }
+  .honor-modal-year {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .honor-modal-title {
+    font-size: clamp(26px, 4vw, 38px);
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+  .honor-modal-desc {
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--text-secondary);
+  }
+  .post-lead { font-size: 20px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 28px; }
+  .post-callout { display: flex; gap: 16px; align-items: flex-start; background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.18); border-left: 4px solid var(--accent); border-radius: 0 12px 12px 0; padding: 20px 24px; margin: 28px 0; }
+  .post-callout-dark { background: #1d1d1f; border-left-color: #f5a623; }
+  .post-callout-dark p { color: rgba(255,255,255,0.75); margin-top: 6px; }
+  .post-callout-dark strong { color: #fff; }
+  .callout-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+  .post-callout strong { display: block; font-size: 17px; margin-bottom: 6px; color: var(--text-primary); }
+  .post-callout p { margin: 0; font-size: 15px; line-height: 1.6; color: var(--text-secondary); }
+  .post-h2 { font-size: 26px; font-weight: 700; letter-spacing: -0.025em; color: var(--text-primary); margin: 52px 0 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+  .post-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0 28px; }
+  .compare-card { padding: 20px; border-radius: 12px; font-size: 15px; line-height: 1.6; background: var(--bg-secondary); border: 1px solid var(--border); }
+  .compare-card p { margin: 8px 0 0; color: var(--text-secondary); }
+  .compare-label { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .compare-bad { background: linear-gradient(180deg, rgba(68,20,20,0.92), rgba(36,12,12,0.96)); border: 1px solid rgba(217,48,37,0.35); }
+  .compare-bad .compare-label { color: #ff8f86; }
+  .compare-good { background: linear-gradient(180deg, rgba(16,52,31,0.92), rgba(10,30,18,0.96)); border: 1px solid rgba(46,160,67,0.34); }
+  .compare-good .compare-label { color: #7ee2a8; }
+  .post-grant-card { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 14px; padding: 24px 28px; margin: 20px 0; }
+  .grant-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); background: rgba(0,113,227,0.08); padding: 3px 10px; border-radius: 20px; margin-bottom: 10px; }
+  .grant-title { font-size: 19px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 4px; }
+  .grant-amount { font-size: 22px; font-weight: 800; color: #7ee2a8; margin-bottom: 12px; letter-spacing: -0.02em; }
+  .post-state-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0 28px; }
+  .state-item { display: flex; flex-direction: column; gap: 3px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+  .state-name { font-size: 13px; font-weight: 700; color: var(--accent); }
+  .state-grant { font-size: 13px; color: var(--text-secondary); }
+  .post-tip { background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.22); border-left: 4px solid #f5a623; border-radius: 0 10px 10px 0; padding: 16px 20px; font-size: 15px; line-height: 1.6; margin: 20px 0 28px; color: var(--text-secondary); }
+  .post-ul, .post-ol { padding-left: 22px; margin: 14px 0 20px; }
+  .post-ul li, .post-ol li { font-size: 17px; line-height: 1.7; margin-bottom: 10px; }
+  .post-ul { list-style: disc; }
+  .post-ol { list-style: decimal; }
+  .post-ol-bold li::marker { font-weight: 700; color: var(--accent); }
+  .post-cta-block { margin: 56px 0 0; background: linear-gradient(135deg, #0f2942 0%, #0a1f35 100%); border-radius: 20px; padding: 48px 48px 40px; color: #fff; text-align: center; }
+  .cta-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #f5a623; margin-bottom: 12px; }
+  .cta-headline { font-size: 32px; font-weight: 800; letter-spacing: -0.03em; color: #fff; margin-bottom: 14px; }
+  .cta-sub { font-size: 16px; color: rgba(255,255,255,0.7); max-width: 480px; margin: 0 auto 28px; line-height: 1.6; }
+  .cta-checklist { list-style: none; text-align: left; max-width: 520px; margin: 0 auto 28px; padding: 0; }
+  .cta-checklist li { font-size: 15px; color: rgba(255,255,255,0.82); padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08); line-height: 1.5; }
+  .cta-checklist li:last-child { border-bottom: none; }
+  .cta-proof { background: rgba(255,255,255,0.07); border-radius: 12px; padding: 16px 20px; font-size: 15px; color: rgba(255,255,255,0.7); max-width: 480px; margin: 0 auto 32px; line-height: 1.6; }
+  .cta-proof strong { color: #f5a623; }
+  .cta-btn { display: inline-block; background: #f5a623; color: #000; font-size: 16px; font-weight: 700; padding: 14px 36px; border-radius: 50px; text-decoration: none; transition: all 0.2s ease; margin-bottom: 18px; }
+  .cta-btn:hover { background: #ffb93a; transform: translateY(-1px); }
+  .cta-fine { font-size: 13px; color: rgba(255,255,255,0.4); font-style: italic; }
+  @media (max-width:600px) { .post-compare,.post-state-grid{grid-template-columns:1fr} .post-cta-block{padding:32px 24px} .cta-headline{font-size:24px} }
+
+  /* ══════════════════════════════════
+     EDITORIAL BLOG STYLES
+  ══════════════════════════════════ */
+
+  .editorial-masthead {
+    padding: 64px 56px 0;
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .masthead-inner {
+    margin-bottom: 32px;
+  }
+  .masthead-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 10px;
+  }
+  .masthead-title {
+    font-size: clamp(34px, 5vw, 56px);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: var(--text-primary);
+    line-height: 1.05;
+    margin-bottom: 12px;
+  }
+  .masthead-sub {
+    font-size: 19px;
+    color: var(--text-secondary);
+    max-width: 640px;
+    line-height: 1.75;
+  }
+  .masthead-rule {
+    height: 1px;
+    background: var(--text-primary);
+    margin-top: 32px;
+  }
+
+  .editorial-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 56px 56px;
+    width: 100%;
+  }
+  .editorial-section-grid { padding-top: 0; }
+
+  /* ── FEATURED ARTICLE SPLIT ── */
+  .featured-article {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.9fr);
+    gap: clamp(32px, 4vw, 56px);
+    align-items: stretch;
+    cursor: pointer;
+    padding: clamp(28px, 4vw, 40px);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+  }
+  @media (max-width: 800px) {
+    .featured-article { grid-template-columns: 1fr; gap: 28px; }
+    .editorial-masthead, .editorial-section { padding-left: 24px; padding-right: 24px; }
+  }
+
+  .featured-article-img-wrap {
+    min-height: 100%;
+    aspect-ratio: 5/4;
+    border-radius: 22px;
+    overflow: hidden;
+    background: var(--bg-secondary);
+  }
+  .featured-article-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .featured-article-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0;
+    padding-right: clamp(0px, 1vw, 10px);
+  }
+
+  .article-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .article-category {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(0,113,227,0.08);
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .article-dot { color: var(--text-tertiary); font-size: 12px; }
+  .article-read-time { font-size: 12px; color: var(--text-tertiary); }
+
+  .featured-article-title {
+    font-size: clamp(30px, 4vw, 48px);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 1.06;
+    color: var(--text-primary);
+    margin-bottom: 18px;
+  }
+
+  .featured-article-excerpt {
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin-bottom: 28px;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .article-byline {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+  .byline-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--bg-tertiary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .byline-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .byline-name { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+  .byline-date { font-size: 13px; color: var(--text-tertiary); margin-top: 3px; }
+
+  .read-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 13px 24px;
+    background: var(--text-primary);
+    color: var(--bg);
+    border: none;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: var(--font);
+    letter-spacing: -0.01em;
+    transition: all 0.2s ease;
+    width: fit-content;
+  }
+  .read-btn:hover { background: var(--accent); transform: translateY(-1px); }
+
+  /* ── EDITORIAL DIVIDER ── */
+  .editorial-divider {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 56px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .editorial-divider::before,
+  .editorial-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-strong);
+  }
+  .editorial-divider span {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    white-space: nowrap;
+  }
+
+  /* ── ARTICLE GRID (editorial cards) ── */
+  .article-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    border-top: none;
+  }
+  @media (max-width: 900px) { .article-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .article-grid { grid-template-columns: 1fr; } }
+
+  .article-card {
+    padding: 24px;
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+    animation: fadeUp 0.4s ease both;
+  }
+  .article-card:nth-child(3n) { border-right: 1px solid var(--border); }
+  .article-card:hover { background: var(--bg-secondary); transform: translateY(-2px); }
+
+  .article-card-img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    border-radius: 14px;
+    display: block;
+    background: var(--bg-tertiary);
+    margin-bottom: 18px;
+    transition: transform 0.35s ease;
+  }
+  .article-card:hover .article-card-img { transform: scale(1.02); }
+
+  .article-card-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .article-card-cat {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .article-card-dot { font-size: 11px; color: var(--text-tertiary); }
+  .article-card-time { font-size: 12px; color: var(--text-tertiary); }
+
+  .article-card-title {
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.25;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: color 0.15s;
+  }
+  .article-card:hover .article-card-title { color: var(--accent); }
+
+  .article-card-excerpt {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    margin-bottom: 22px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .article-card-byline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+  .article-card-avatar {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--bg-tertiary);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .article-card-author { font-size: 13px; font-weight: 600; color: var(--text-secondary); }
+  .article-card-sep { font-size: 12px; color: var(--text-tertiary); }
+  .article-card-date { font-size: 13px; color: var(--text-tertiary); }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: #1d1d1f;
+    color: #fff;
+    padding: 12px 22px;
+    border-radius: 32px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 99999;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    white-space: nowrap;
+    pointer-events: none;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ── LOADING MORE ── */
+  .load-more {
+    display: block;
+    margin: 40px auto 0;
+    padding: 12px 32px;
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    border-radius: 22px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.18s;
+    font-family: var(--font);
+  }
+  .load-more:hover { background: var(--bg-secondary); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0 48px;
+  }
+
+  /* ══════════════════════════════════════
+     ADMIN MODE — INLINE EDITING SYSTEM
+  ══════════════════════════════════════ */
+
+  /* Floating admin bar */
+  .admin-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 7000;
+    background: #1d1d1f;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 28px;
+    gap: 12px;
+    animation: slideBarUp 0.3s cubic-bezier(0.34,1.2,0.64,1);
+  }
+  .admin-bar.visible { display: flex; }
+  @keyframes slideBarUp {
+    from { transform: translateY(60px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+  }
+  .admin-bar-left {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .admin-badge {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 13px; font-weight: 700;
+    color: #f5a623;
+    letter-spacing: -0.01em;
+  }
+  .admin-badge-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #f5a623;
+    box-shadow: 0 0 0 3px rgba(245,166,35,0.25);
+    animation: pulse 2s ease infinite;
+  }
+  .admin-bar-hint {
+    font-size: 12px; color: rgba(255,255,255,0.4);
+  }
+  .admin-bar-right { display: flex; align-items: center; gap: 8px; }
+
+  .bar-btn {
+    padding: 7px 16px; border-radius: 8px;
+    font-size: 13px; font-weight: 600;
+    cursor: pointer; border: none;
+    font-family: var(--font);
+    transition: all 0.15s ease;
+    letter-spacing: -0.01em;
+  }
+  .bar-btn-ghost {
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.75);
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+  .bar-btn-ghost:hover { background: rgba(255,255,255,0.14); color: #fff; }
+  .bar-btn-accent { background: var(--accent); color: #fff; }
+  .bar-btn-accent:hover { background: var(--accent-hover); }
+  .bar-btn-danger { background: rgba(255,59,48,0.15); color: #ff3b30; border: 1px solid rgba(255,59,48,0.25); }
+  .bar-btn-danger:hover { background: rgba(255,59,48,0.25); }
+
+  /* Body padding when bar is visible */
+  body.admin-mode { padding-bottom: 58px; }
+
+  /* Edit overlay on every card */
+  .editable-wrap { position: relative; }
+  .edit-trigger {
+    position: absolute;
+    top: 10px; right: 10px;
+    z-index: 10;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: rgba(0,0,0,0.65);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  .edit-trigger:hover { background: var(--accent); border-color: var(--accent); transform: scale(1.08); }
+  body.admin-mode .editable-wrap .edit-trigger { display: flex; }
+
+  /* Featured hero edit trigger — bigger, always visible in admin */
+  .edit-trigger-hero {
+    position: absolute;
+    top: 20px; right: 20px;
+    z-index: 20;
+    display: none;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 16px;
+    background: rgba(0,0,0,0.72);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 10px;
+    color: #fff;
+    font-size: 13px; font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    font-family: var(--font);
+  }
+  .edit-trigger-hero:hover { background: var(--accent); border-color: var(--accent); }
+  body.admin-mode .edit-trigger-hero { display: flex; }
+
+  /* Editorial featured edit badge */
+  .edit-trigger-editorial {
+    position: absolute;
+    top: 0; right: 0;
+    z-index: 10;
+    display: none;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: var(--accent);
+    border-radius: 0 16px 0 10px;
+    color: #fff;
+    font-size: 12px; font-weight: 700;
+    cursor: pointer;
+    font-family: var(--font);
+    transition: all 0.15s;
+  }
+  .edit-trigger-editorial:hover { background: var(--accent-hover); }
+  body.admin-mode .edit-trigger-editorial { display: flex; }
+
+  /* Editable highlight ring in admin mode */
+  body.admin-mode .editable-wrap:hover { outline: 2px dashed rgba(0,113,227,0.4); outline-offset: 2px; border-radius: 14px; }
+
+  /* ── EDIT DRAWER ── */
+  .edit-drawer {
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    width: 420px;
+    background: var(--bg);
+    box-shadow: -8px 0 40px rgba(0,0,0,0.14);
+    z-index: 8500;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-left: 1px solid var(--border);
+  }
+  .edit-drawer.open { transform: translateX(0); }
+
+  .drawer-header {
+    display: flex; align-items: center;
+    justify-content: space-between;
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    background: var(--bg-secondary);
+  }
+  .drawer-type-label {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .drawer-type-pill {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.07em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 20px;
+    background: rgba(0,113,227,0.1); color: var(--accent);
+  }
+  .drawer-title { font-size: 16px; font-weight: 700; letter-spacing: -0.02em; }
+  .drawer-close {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--bg-tertiary); border: none;
+    cursor: pointer; font-size: 15px; color: var(--text-secondary);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s; font-family: var(--font);
+  }
+  .drawer-close:hover { background: var(--border-strong); color: var(--text-primary); }
+
+  .drawer-body {
+    flex: 1; overflow-y: auto; padding: 20px 22px;
+  }
+  .drawer-body .form-group { margin-bottom: 16px; }
+  .drawer-body label { font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 5px; display: block; letter-spacing: -0.01em; }
+  .drawer-body input[type="text"],
+  .drawer-body input[type="url"],
+  .drawer-body textarea,
+  .drawer-body select {
+    width: 100%; padding: 9px 12px;
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    font-family: var(--font); font-size: 13.5px;
+    color: var(--text-primary); background: var(--bg);
+    outline: none; transition: border-color 0.15s;
+  }
+  .drawer-body input:focus, .drawer-body textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0,113,227,0.1);
+  }
+  .drawer-body textarea { resize: vertical; min-height: 70px; line-height: 1.5; }
+  .drawer-img-preview {
+    width: 100%; aspect-ratio: 16/9;
+    object-fit: cover; border-radius: 8px;
+    border: 1px solid var(--border);
+    display: none; margin-top: 8px; background: var(--bg-secondary);
+  }
+
+  .drawer-footer {
+    padding: 16px 22px;
+    border-top: 1px solid var(--border);
+    display: flex; gap: 8px; flex-shrink: 0;
+    background: var(--bg-secondary);
+  }
+  .drawer-save {
+    flex: 1; padding: 11px;
+    background: var(--accent); color: #fff;
+    border: none; border-radius: 10px;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer; font-family: var(--font);
+    transition: all 0.18s;
+    letter-spacing: -0.01em;
+  }
+  .drawer-save:hover { background: var(--accent-hover); }
+  .drawer-cancel {
+    padding: 11px 18px;
+    background: transparent; color: var(--text-secondary);
+    border: 1px solid var(--border-strong);
+    border-radius: 10px; font-size: 14px; font-weight: 600;
+    cursor: pointer; font-family: var(--font); transition: all 0.15s;
+  }
+  .drawer-cancel:hover { background: var(--bg-secondary); }
+  .drawer-delete {
+    padding: 11px 14px;
+    background: transparent; color: #ff3b30;
+    border: 1px solid rgba(255,59,48,0.25);
+    border-radius: 10px; font-size: 13px; font-weight: 600;
+    cursor: pointer; font-family: var(--font); transition: all 0.15s;
+  }
+  .drawer-delete:hover { background: #fff0ef; }
+
+  /* Dim backdrop behind drawer */
+  .drawer-backdrop {
+    position: fixed; inset: 0; z-index: 8400;
+    background: rgba(0,0,0,0.3); display: none;
+  }
+  .drawer-backdrop.open { display: block; }
+
+  @media (max-width: 480px) { .edit-drawer { width: 100%; } }
+
+  /* ── PROJECT THEME OVERRIDES ── */
+  :root {
+    --bg: #000000;
+    --bg-secondary: #141414;
+    --bg-tertiary: #1c1c1e;
+    --text-primary: #f5f5f7;
+    --text-secondary: #a1a1a6;
+    --text-tertiary: #636366;
+    --accent: #c9a84c;
+    --accent-hover: #e3c876;
+    --border: rgba(255,255,255,0.08);
+    --border-strong: rgba(255,255,255,0.14);
+    --card-shadow: 0 12px 34px rgba(0,0,0,0.28);
+    --card-shadow-hover: 0 24px 64px rgba(0,0,0,0.44);
+    --radius: 18px;
+    --radius-sm: 10px;
+    --radius-lg: 28px;
+  }
+
+  body {
+    background:
+      radial-gradient(circle at top right, rgba(201,168,76,0.08), transparent 34%),
+      linear-gradient(180deg, #050505 0%, #000 32%, #050505 100%);
+    color: var(--text-primary);
+  }
+
+  nav {
+    background: rgba(8,9,11,0.88);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    padding: 0 clamp(18px, 4vw, 30px);
+  }
+
+  .nav-logo,
+  .section-title,
+  .featured-title,
+  .featured-article-title,
+  .blog-modal-title {
+    color: var(--text-primary);
+  }
+
+  .nav-tabs {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 4px;
+  }
+
+  .nav-tab {
+    color: var(--text-secondary);
+    border-radius: 999px;
+  }
+
+  .nav-tab.active {
+    background: var(--accent);
+    color: #000;
+    box-shadow: none;
+  }
+
+  .btn-ghost {
+    color: var(--text-primary);
+  }
+
+  .btn-ghost:hover {
+    background: rgba(255,255,255,0.06);
+  }
+
+  .btn-primary,
+  .bar-btn-accent,
+  .drawer-save,
+  .read-btn:hover {
+    background: var(--accent);
+    color: #000;
+  }
+
+  .btn-primary:hover,
+  .bar-btn-accent:hover,
+  .drawer-save:hover {
+    background: var(--accent-hover);
+  }
+
+  .section-link,
+  .video-category,
+  .article-card-cat,
+  .blog-modal-category,
+  .grant-tag,
+  .state-name,
+  .blog-modal-back,
+  .admin-tab.active {
+    color: var(--accent);
+  }
+
+  .video-card,
+  .featured-article,
+  .article-card,
+  .post-grant-card,
+  .state-item,
+  .content-item,
+  .admin-panel,
+  .terminal,
+  .edit-drawer {
+    background: linear-gradient(180deg, rgba(28,28,30,0.96), rgba(20,20,20,0.96));
+    border-color: var(--border);
+    box-shadow: var(--card-shadow);
+  }
+
+  .video-card:hover,
+  .featured-article:hover,
+  .article-card:hover {
+    box-shadow: var(--card-shadow-hover);
+    border-color: rgba(201,168,76,0.28);
+  }
+
+  .featured-hero-overlay {
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.44) 58%, transparent 100%);
+    padding: clamp(28px, 5vw, 56px);
+  }
+
+  .featured-badge,
+  .featured-meta,
+  .video-desc,
+  .video-meta,
+  .featured-article-excerpt,
+  .blog-modal-author-date,
+  label,
+  .content-item-meta,
+  .empty-state {
+    color: var(--text-secondary);
+  }
+
+  .avatar,
+  .article-card-avatar,
+  .byline-avatar,
+  .content-item-thumb,
+  .admin-close,
+  .icon-btn,
+  .load-more,
+  .drawer-cancel,
+  .file-drop,
+  .radio-opt,
+  input[type="text"],
+  input[type="url"],
+  textarea,
+  select,
+  .drawer-body input[type="text"],
+  .drawer-body input[type="url"],
+  .drawer-body textarea,
+  .drawer-body select {
+    background: rgba(255,255,255,0.04);
+    color: var(--text-primary);
+    border-color: var(--border);
+  }
+
+  .icon-btn:hover,
+  .load-more:hover,
+  .drawer-cancel:hover,
+  .admin-close:hover,
+  .content-item:hover,
+  .file-drop:hover,
+  .file-drop.dragover {
+    background: rgba(255,255,255,0.07);
+  }
+
+  input[type="text"]:focus,
+  input[type="url"]:focus,
+  textarea:focus,
+  select:focus,
+  .drawer-body input:focus,
+  .drawer-body textarea:focus {
+    border-color: rgba(201,168,76,0.72);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.14);
+  }
+
+  .post-callout {
+    background: rgba(201,168,76,0.08);
+    border-left-color: var(--accent);
+  }
+
+  .grant-tag {
+    background: rgba(201,168,76,0.12);
+  }
+
+  .featured-article:hover .featured-article-title,
+  .article-card:hover .article-card-title,
+  .section-link:hover {
+    color: var(--accent-hover);
+  }
+
+  .blog-modal,
+  .blog-modal-content {
+    background: #050505;
+    color: var(--text-primary);
+  }
+
+  .blog-modal-nav {
+    background: rgba(8,9,11,0.94);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: none;
+  }
+
+  .terminal-overlay,
+  .admin-overlay,
+  .drawer-backdrop {
+    background: rgba(0,0,0,0.65);
+  }
+
+  @media (max-width: 900px) {
+    nav {
+      flex-wrap: wrap;
+      height: auto;
+      min-height: var(--nav-height);
+      padding-top: 10px;
+      padding-bottom: 10px;
+      row-gap: 10px;
+    }
+
+    .nav-tabs {
+      order: 3;
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 768px) {
+    html {
+      -webkit-text-size-adjust: 100%;
+    }
+
+    a,
+    button,
+    .video-card,
+    .featured-hero,
+    .featured-article,
+    .article-card,
+    .content-item,
+    .icon-btn,
+    .load-more,
+    .read-btn {
+      touch-action: manipulation;
+    }
+
+    nav {
+      padding-left: 16px;
+      padding-right: 16px;
+      align-items: center;
+    }
+
+    .nav-logo {
+      min-height: 44px;
+      gap: 10px;
+    }
+
+    .nav-right,
+    .nav-tabs {
+      width: 100%;
+    }
+
+    .nav-right {
+      justify-content: flex-end;
+    }
+
+    .nav-tab,
+    .btn,
+    .read-btn,
+    .load-more {
+      min-height: 44px;
+    }
+
+    .featured-hero-inner {
+      aspect-ratio: 16 / 10;
+      max-height: none;
+      padding: 12px;
+    }
+
+    .featured-hero-inner iframe,
+    .featured-hero-inner video,
+    .featured-hero-thumb {
+      inset: 12px;
+      width: calc(100% - 24px);
+      height: calc(100% - 24px);
+    }
+
+    .featured-hero-overlay {
+      padding: 24px 22px 22px;
+    }
+
+    .featured-title {
+      max-width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .featured-meta {
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    .section-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .editorial-masthead {
+      padding: 40px 20px 0;
+    }
+
+    .editorial-section,
+    .editorial-divider {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .editorial-section {
+      padding-top: 32px;
+      padding-bottom: 32px;
+    }
+
+    .featured-article {
+      gap: 22px;
+    }
+
+    .featured-article-title {
+      font-size: clamp(26px, 7vw, 34px);
+    }
+
+    .featured-article-excerpt,
+    .masthead-sub {
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .article-card {
+      padding: 22px 20px;
+    }
+
+    .article-card-title {
+      font-size: 19px;
+    }
+
+    .article-card-excerpt {
+      font-size: 14px;
+    }
+
+    .blog-modal-nav {
+      padding: 12px 18px;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .blog-modal-body {
+      padding: 40px 20px 72px;
+    }
+
+    .post-lead {
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .post-callout,
+    .post-grant-card,
+    .post-cta-block {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .post-ul li,
+    .post-ol li {
+      font-size: 16px;
+    }
+  }
+
+  /* ── ABOUT TAB ── */
+  .about-section-constrained { max-width: 1100px; margin: 0 auto; }
+
+  .about-hero {
+    position: relative;
+    width: 100%;
+    min-height: 420px;
+    background: #000;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+  }
+  .about-hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    opacity: 0.42;
+  }
+  .about-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.94) 0%, rgba(0,0,0,0.32) 58%, transparent 100%);
+  }
+  .about-hero-content {
+    position: relative;
+    z-index: 2;
+    padding: clamp(32px,6vw,72px) clamp(24px,5vw,64px) clamp(44px,7vw,80px);
+    max-width: 820px;
+  }
+  .about-hero-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .about-hero-title {
+    font-size: clamp(38px,6vw,72px);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    color: #fff;
+    margin-bottom: 18px;
+  }
+  .about-hero-sub {
+    font-size: clamp(15px,2vw,18px);
+    color: rgba(255,255,255,0.62);
+    max-width: 540px;
+    line-height: 1.65;
+    margin-bottom: 30px;
+  }
+  .about-hero-btns {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .about-btn-primary {
+    display: inline-block;
+    padding: 12px 28px;
+    background: var(--accent);
+    color: #000;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: background 0.18s;
+  }
+  .about-btn-primary:hover { background: var(--accent-hover); }
+  .about-btn-ghost {
+    display: inline-block;
+    padding: 12px 28px;
+    background: transparent;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.28);
+    text-decoration: none;
+    transition: background 0.18s;
+  }
+  .about-btn-ghost:hover { background: rgba(255,255,255,0.09); }
+
+  .about-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .about-section-title {
+    font-size: clamp(24px,3.5vw,38px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+  }
+  .about-body {
+    font-size: 15.5px;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    margin-bottom: 18px;
+  }
+  .about-strong { color: var(--text-primary); font-weight: 700; }
+
+  .about-journey-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: start;
+  }
+  .about-journey-text { display: flex; flex-direction: column; }
+  .about-social-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 32px;
+  }
+  .about-social-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 18px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .about-social-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  .about-stats-col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-top: 4px;
+  }
+  .about-stat-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px 26px;
+    transition: border-color 0.2s;
+  }
+  .about-stat-card:hover { border-color: var(--accent); }
+  .about-stat-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .about-stat-value {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    line-height: 1.1;
+  }
+  .about-stat-value-md { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; }
+  .about-stat-sub {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 5px;
+  }
+
+  .about-honors-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .about-honor-card {
+    appearance: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    font-family: inherit;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px;
+    transition: border-color 0.2s, transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .about-honor-card:hover,
+  .about-honor-card:focus-visible {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow-hover);
+    outline: none;
+  }
+  .about-honor-year {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .about-honor-title {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .about-honor-desc {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 900px) {
+    .about-journey-grid { grid-template-columns: 1fr; gap: 36px; }
+    .about-honors-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .about-honors-grid { grid-template-columns: 1fr; }
+    .about-hero { min-height: 360px; }
+  }
+
+
+
+    .nav-tab {
+      flex: 1;
+      justify-content: center;
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+
+    .section,
+    .section-sm {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    .masthead-title {
+      font-size: 30px;
+    }
+
+    .featured-article-title,
+    .article-card-title {
+      line-height: 1.18;
+    }
+
+    .blog-modal-author {
+      align-items: flex-start;
+    }
+
+    .post-callout {
+      gap: 12px;
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════ NAV ═══════════ -->
+<nav>
+  <a href="index.html" class="nav-logo" aria-label="Naphtali Bryant home">
+    <span class="brand-mark" aria-hidden="true">NB</span>
+    <span class="brand-wordmark">Naphtali <em>Bryant</em></span>
+  </a>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="switchTab('about')"><span class="tab-icon">◈</span> About</button>
+  </div>
+</nav>
+
+<!-- ═══════════ VIDEOS TAB ═══════════ -->
+<div id="tab-videos" class="tab-panel">
+
+  <!-- Featured Video Hero -->
+  <div class="featured-hero" id="featuredHero" onclick="playFeatured()">
+    <div class="featured-hero-inner">
+      <img class="featured-hero-thumb" id="featuredThumb"
+           src="https://images.unsplash.com/photo-1604871000636-074fa5117945?w=1400&auto=format&fit=crop&q=80"
+           alt="Featured video">
+    </div>
+    <div class="featured-hero-overlay">
+      <span class="featured-badge">Featured</span>
+      <h1 class="featured-title" id="featuredTitle">Breaking Into Product Design: Advice from Our Founder</h1>
+      <div class="featured-meta">
+        <img class="featured-author-img"
+             src="https://ui-avatars.com/api/?name=Naphtali+Bryant&background=c9a84c&color=000&size=56"
+             alt="Author">
+        <span id="featuredAuthor">Naphtali Bryant</span>
+        <span>·</span>
+        <span id="featuredDate">19 Jan 2022</span>
+        <span>·</span>
+        <span id="featuredDuration">18 min</span>
+      </div>
+    </div>
+    <div class="play-btn">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+    </div>
+  </div>
+
+  <!-- Video Grid -->
+  <div class="section">
+    <div class="section-header">
+      <h2 class="section-title">Recent Videos</h2>
+    </div>
+    <div class="video-grid" id="videoGrid">
+      <!-- injected by JS -->
+    </div>
+    <button class="load-more" id="loadMoreBtn" onclick="loadMore()" style="display:none">Loading more…</button>
+  </div>
+
+</div>
+
+<!-- ═══════════ BLOG TAB ═══════════ -->
+<div id="tab-blog" class="tab-panel">
+
+  <!-- Editorial masthead -->
+  <div class="editorial-masthead">
+    <div class="masthead-inner">
+      <div class="masthead-label">The Publication</div>
+      <h1 class="masthead-title">Ideas Worth Reading</h1>
+      <p class="masthead-sub">Long-form articles, guides, and insights for students, builders, and curious minds.</p>
+    </div>
+    <div class="masthead-rule"></div>
+  </div>
+
+  <!-- Featured article — editorial split layout -->
+  <div class="editorial-section">
+    <div class="featured-article" id="blogFeaturedEl" onclick="">
+      <div class="featured-article-img-wrap">
+        <img class="featured-article-img" id="blogHeroImg" src="" alt="Featured post" onerror="this.onerror=null;this.src='hero-poster.jpg'">
+      </div>
+      <div class="featured-article-body">
+        <div class="article-eyebrow">
+          <span class="article-category" id="blogHeroCategory">Featured</span>
+          <span class="article-dot">·</span>
+          <span class="article-read-time" id="blogHeroReadTime">8 min read</span>
+        </div>
+        <h2 class="featured-article-title" id="blogHeroTitle">Article Title</h2>
+        <p class="featured-article-excerpt" id="blogHeroDesc">Excerpt goes here.</p>
+        <div class="article-byline" id="blogHeroByline">
+          <div class="byline-avatar" id="blogHeroAvatar"></div>
+          <div>
+            <div class="byline-name" id="blogHeroAuthor">Author</div>
+            <div class="byline-date" id="blogHeroDate">Date</div>
+          </div>
+        </div>
+        <button class="read-btn" id="blogHeroBtn">Read Article →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section divider -->
+  <div class="editorial-divider">
+    <span>More Articles</span>
+  </div>
+
+  <!-- Article grid — pure text-forward editorial cards -->
+  <div class="editorial-section editorial-section-grid">
+    <div class="article-grid" id="blogGrid">
+      <!-- injected by JS -->
+    </div>
+    <button class="load-more" id="blogLoadMoreBtn" onclick="loadMoreBlog()" style="display:none">Load more articles</button>
+  </div>
+
+</div>
+
+<!-- ═══════════ ABOUT TAB ═══════════ -->
+<div id="tab-about" class="tab-panel">
+
+  <!-- Hero -->
+  <div class="about-hero">
+    <img class="about-hero-img" src="INtrapreneur/6.png" alt="Naphtali Speaking" loading="lazy" decoding="async">
+    <div class="about-hero-overlay"></div>
+    <div class="about-hero-content">
+      <p class="about-hero-eyebrow">Award-winning Educator · International Speaker</p>
+      <h1 class="about-hero-title">NAPHTALI BRYANT</h1>
+      <p class="about-hero-sub">Transforming lives through purpose-driven leadership and educational innovation — one scholarship at a time.</p>
+      <div class="about-hero-btns">
+        <a href="https://naphtalitekoabryant.online/contact/" class="about-btn-primary">Get in Touch</a>
+        <a href="https://www.skool.com/spark-ed-university-5652/about?ref=5ebca8ecda924bbe80b9423662b6a023" class="about-btn-ghost">Join Free Community</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Journey -->
+  <div class="section about-section-constrained">
+    <div class="about-journey-grid">
+      <div class="about-journey-text">
+        <p class="about-eyebrow">• About Naphtali</p>
+        <h2 class="about-section-title">My Journey</h2>
+        <p class="about-body">Naphtali Bryant is a dynamic speaker, award-winning educator, and recognized intrapreneur dedicated to transforming education into a launchpad for career success. His journey began with a bold decision: after a 13-year gap in schooling, he returned to college, determined to move beyond retail and into a career of purpose.</p>
+        <p class="about-body">That decision launched a path of high achievement, including multiple degrees, national scholarships, and international study experiences in Taiwan and China. In 2017, Naphtali founded <strong class="about-strong">Spark-ED University</strong> — an initiative equipping students to uncover their purpose, secure funding with little to no debt, and gain early career opportunities.</p>
+        <div class="about-social-row">
+          <a href="https://www.linkedin.com/in/naphtalitekoabryant" class="about-social-btn">LinkedIn</a>
+          <a href="https://www.instagram.com/naphtalit.bryant/" class="about-social-btn">Instagram</a>
+          <a href="https://x.com/naphtalitbryant" class="about-social-btn">X</a>
+          <a href="https://www.tiktok.com/@naphtalitbryant" class="about-social-btn">TikTok</a>
+        </div>
+      </div>
+      <div class="about-stats-col">
+        <div class="about-stat-card">
+          <div class="about-stat-label">Founded</div>
+          <div class="about-stat-value">2017</div>
+          <div class="about-stat-sub">Spark-ED University</div>
+        </div>
+        <div class="about-stat-card">
+          <div class="about-stat-label">International Experience</div>
+          <div class="about-stat-value about-stat-value-md">Taiwan · China · Colombia · Ghana</div>
+          <div class="about-stat-sub">Global speaking & study engagements</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Honors -->
+  <div class="section about-section-constrained">
+    <p class="about-eyebrow">• Recognition & Impact</p>
+    <h2 class="about-section-title" style="margin-bottom:36px;">Global Leadership Honors</h2>
+    <div class="about-honors-grid">
+      <button type="button" class="about-honor-card" onclick="openHonorPreview('2020', 'Top 100 Leaders in Education', 'Recognized globally for innovative approaches to education and student success initiatives.')">
+        <div class="about-honor-year">2020</div>
+        <h3 class="about-honor-title">Top 100 Leaders in Education</h3>
+        <p class="about-honor-desc">Recognized globally for innovative approaches to education and student success initiatives.</p>
+      </button>
+      <button type="button" class="about-honor-card" onclick="openHonorPreview('2022', 'NISOD Excellence Award', 'Honored for outstanding contributions to teaching, learning, and leadership excellence.')">
+        <div class="about-honor-year">2022</div>
+        <h3 class="about-honor-title">NISOD Excellence Award</h3>
+        <p class="about-honor-desc">Honored for outstanding contributions to teaching, learning, and leadership excellence.</p>
+      </button>
+      <button type="button" class="about-honor-card" onclick="openHonorPreview('2023', 'Outstanding Intrapreneur', 'Global Intrapreneurs Institute in Australia — innovation in the not-for-profit sector.')">
+        <div class="about-honor-year">2023</div>
+        <h3 class="about-honor-title">Outstanding Intrapreneur</h3>
+        <p class="about-honor-desc">Global Intrapreneurs Institute in Australia — innovation in the not-for-profit sector.</p>
+      </button>
+      <button type="button" class="about-honor-card" onclick="openHonorPreview('Speaking', 'International Speaker', 'Featured speaker at University of Tolima in Colombia, sharing strategies for educational success.')">
+        <div class="about-honor-year">Speaking</div>
+        <h3 class="about-honor-title">International Speaker</h3>
+        <p class="about-honor-desc">Featured speaker at University of Tolima in Colombia, sharing strategies for educational success.</p>
+      </button>
+      <button type="button" class="about-honor-card" onclick="openHonorPreview('Mentorship', 'Mentorship Leader', 'Mentored African American men through Leaders of the Free World program in Ghana.')">
+        <div class="about-honor-year">Mentorship</div>
+        <h3 class="about-honor-title">Mentorship Leader</h3>
+        <p class="about-honor-desc">Mentored African American men through Leaders of the Free World program in Ghana.</p>
+      </button>
+      <button type="button" class="about-honor-card" onclick="openHonorPreview('2024', 'Marquis Who\\'s Who', 'Named Honoree Listee, recognizing significant contributions to education and leadership.')">
+        <div class="about-honor-year">2024</div>
+        <h3 class="about-honor-title">Marquis Who's Who</h3>
+        <p class="about-honor-desc">Named Honoree Listee, recognizing significant contributions to education and leadership.</p>
+      </button>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Latest Articles -->
+  <div class="section about-section-constrained">
+    <div class="section-header">
+      <div>
+        <p class="about-eyebrow" style="margin-bottom:8px;">Latest Articles & Insights</p>
+        <h2 class="section-title">Explore Thought Leadership</h2>
+      </div>
+    </div>
+
+    <div class="featured-article" id="aboutFeaturedEl" style="margin-bottom:30px;">
+      <div class="featured-article-img-wrap">
+        <img class="featured-article-img" id="aboutHeroImg" src="" alt="Featured post" onerror="this.onerror=null;this.src='hero-poster.jpg'">
+      </div>
+      <div class="featured-article-body">
+        <div class="article-eyebrow">
+          <span class="article-category" id="aboutHeroCategory">Featured</span>
+          <span class="article-dot">·</span>
+          <span class="article-read-time" id="aboutHeroReadTime">8 min read</span>
+        </div>
+        <h2 class="featured-article-title" id="aboutHeroTitle">Article Title</h2>
+        <p class="featured-article-excerpt" id="aboutHeroDesc">Excerpt goes here.</p>
+        <div class="article-byline">
+          <div class="byline-avatar" id="aboutHeroAvatar"></div>
+          <div>
+            <div class="byline-name" id="aboutHeroAuthor">Author</div>
+            <div class="byline-date" id="aboutHeroDate">Date</div>
+          </div>
+        </div>
+        <button class="read-btn" id="aboutHeroBtn">Read Article →</button>
+      </div>
+    </div>
+
+    <div class="article-grid" id="aboutBlogGrid">
+      <!-- injected by JS -->
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════ TERMINAL MODAL ═══════════ -->
+<div class="terminal-overlay" id="terminalOverlay" onclick="handleTerminalOverlayClick(event)">
+  <div class="terminal">
+    <div class="terminal-bar">
+      <div class="dot dot-red" onclick="closeTerminal()" style="cursor:pointer"></div>
+      <div class="dot dot-yellow"></div>
+      <div class="dot dot-green"></div>
+      <span class="terminal-title">admin — bash — 80×24</span>
+    </div>
+    <div class="terminal-body">
+      <div class="terminal-line">Welcome to the Naphtali Bryant media admin terminal</div>
+      <div class="terminal-line" style="color:rgba(255,255,255,0.45); font-size:11px;">Press ESC to close · Enter password to authenticate</div>
+      <div id="terminalOutput"></div>
+      <div class="terminal-prompt-line">
+        <span class="terminal-prompt">admin@naphtali-bryant:~$ </span>
+        <input type="password" class="terminal-input" id="terminalInput" placeholder="enter password…" autocomplete="off">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ ADMIN PANEL ═══════════ -->
+<div class="admin-overlay" id="adminOverlay" onclick="handleAdminOverlayClick(event)">
+  <div class="admin-panel">
+    <div class="admin-header">
+      <div>
+        <div class="admin-title">Content Manager</div>
+      </div>
+      <button class="admin-close" onclick="closeAdmin()">✕</button>
+    </div>
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="switchAdminTab('add-video')">＋ Add Video</button>
+      <button class="admin-tab" onclick="switchAdminTab('manage-videos')">Manage Videos</button>
+      <button class="admin-tab" onclick="switchAdminTab('add-post')">＋ Add Post</button>
+      <button class="admin-tab" onclick="switchAdminTab('manage-posts')">Manage Posts</button>
+    </div>
+    <div class="admin-body">
+
+      <!-- Add Video -->
+      <div id="admin-add-video" class="admin-section">
+        <div class="form-group">
+          <label>Video Source</label>
+          <div class="radio-group">
+            <div class="radio-opt selected" data-val="youtube" onclick="selectSource(this,'youtube')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21.8 8s-.2-1.4-.8-2c-.8-.8-1.7-.8-2.1-.9C16.4 5 12 5 12 5s-4.4 0-6.9.1c-.4.1-1.3.1-2.1.9C2.4 6.6 2.2 8 2.2 8S2 9.6 2 11.2v1.5c0 1.6.2 3.2.2 3.2s.2 1.4.8 2c.8.8 1.8.8 2.3.8C6.8 19 12 19 12 19s4.4 0 6.9-.1c.4-.1 1.3-.1 2.1-.9.6-.6.8-2 .8-2s.2-1.6.2-3.2v-1.5C22 9.6 21.8 8 21.8 8zM9.7 14.5V9l5.8 2.8-5.8 2.7z"/></svg>
+              YouTube
+            </div>
+            <div class="radio-opt" data-val="vimeo" onclick="selectSource(this,'vimeo')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.977 6.416c-.105 2.338-1.739 5.543-4.894 9.609-3.268 4.247-6.026 6.37-8.29 6.37-1.409 0-2.578-1.294-3.553-3.881L5.322 11.4C4.603 8.816 3.834 7.522 3.01 7.522c-.179 0-.806.378-1.881 1.132L0 7.197c1.185-1.044 2.351-2.084 3.501-3.128C5.08 2.701 6.266 1.984 7.055 1.91c1.867-.18 3.016 1.1 3.447 3.838.465 2.953.789 4.789.971 5.507.539 2.45 1.131 3.674 1.776 3.674.502 0 1.256-.796 2.265-2.385 1.004-1.589 1.54-2.797 1.612-3.628.144-1.371-.395-2.061-1.612-2.061-.574 0-1.167.121-1.777.391 1.186-3.868 3.434-5.757 6.762-5.637 2.473.06 3.628 1.664 3.478 4.807z"/></svg>
+              Vimeo
+            </div>
+            <div class="radio-opt" data-val="upload" onclick="selectSource(this,'upload')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+              Upload File
+            </div>
+          </div>
+        </div>
+
+        <div id="url-input-group" class="form-group">
+          <label>Video URL</label>
+          <input type="url" id="videoUrl" placeholder="https://youtube.com/watch?v=... or https://vimeo.com/123456">
+        </div>
+
+        <div id="file-input-group" class="form-group" style="display:none">
+          <label>Video File</label>
+          <div class="file-drop" id="fileDrop" onclick="document.getElementById('videoFile').click()" ondragover="handleDragOver(event)" ondrop="handleDrop(event)">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#aeaeb2" stroke-width="1.5"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+            <p id="fileLabel">Click to upload or drag & drop</p>
+            <span>MP4, MOV, WebM up to 2GB</span>
+          </div>
+          <input type="file" id="videoFile" accept="video/*" style="display:none" onchange="handleFileSelect(event)">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Title</label>
+            <input type="text" id="videoTitle" placeholder="Enter video title">
+          </div>
+          <div class="form-group">
+            <label>Category</label>
+            <input type="text" id="videoCategory" placeholder="e.g. Design, Code, Interview">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Description</label>
+          <textarea id="videoDesc" placeholder="Brief description of the video…" rows="3"></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Author</label>
+            <input type="text" id="videoAuthor" placeholder="Author name">
+          </div>
+          <div class="form-group">
+            <label>Duration</label>
+            <input type="text" id="videoDuration" placeholder="e.g. 12 min">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Thumbnail URL <span style="font-weight:400;color:var(--text-tertiary)">(optional — auto-generated for YouTube)</span></label>
+          <input type="url" id="videoThumb" placeholder="https://… or leave blank" oninput="previewThumb()">
+          <img id="thumbPreview" class="thumb-preview">
+        </div>
+
+        <div style="display:flex; gap:12px; margin-top:8px">
+          <button class="btn btn-primary" onclick="saveVideo()" style="flex:1; padding:12px; font-size:15px; border-radius:10px">Publish Video</button>
+          <button class="btn btn-ghost" onclick="clearVideoForm()" style="padding:12px 20px; border-radius:10px; border:1px solid var(--border-strong)">Clear</button>
+        </div>
+      </div>
+
+      <!-- Manage Videos -->
+      <div id="admin-manage-videos" class="admin-section" style="display:none">
+        <div class="content-list" id="manageVideoList"></div>
+      </div>
+
+      <!-- Add Post -->
+      <div id="admin-add-post" class="admin-section" style="display:none">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Post Title</label>
+            <input type="text" id="postTitle" placeholder="Enter post title">
+          </div>
+          <div class="form-group">
+            <label>Category</label>
+            <input type="text" id="postCategory" placeholder="e.g. Design, Engineering">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Author</label>
+          <input type="text" id="postAuthor" placeholder="Author name">
+        </div>
+        <div class="form-group">
+          <label>Excerpt / Summary</label>
+          <textarea id="postExcerpt" placeholder="Short description…" rows="2"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Full Post Content</label>
+          <textarea id="postBody" placeholder="Write your full blog post here…" rows="8"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Cover Image URL</label>
+          <input type="url" id="postImage" placeholder="https://images.unsplash.com/…">
+        </div>
+        <div style="display:flex; gap:12px; margin-top:8px">
+          <button class="btn btn-primary" onclick="savePost()" style="flex:1; padding:12px; font-size:15px; border-radius:10px">Publish Post</button>
+          <button class="btn btn-ghost" onclick="clearPostForm()" style="padding:12px 20px; border-radius:10px; border:1px solid var(--border-strong)">Clear</button>
+        </div>
+      </div>
+
+      <!-- Manage Posts -->
+      <div id="admin-manage-posts" class="admin-section" style="display:none">
+        <div class="content-list" id="managePostList"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ VIDEO PLAYBACK MODAL ═══════════ -->
+<div class="video-modal" id="videoModal">
+  <div class="video-modal-inner">
+    <button class="video-modal-close" onclick="closeVideoModal()">✕</button>
+    <div class="video-modal-player" id="videoPlayer"></div>
+    <div class="video-modal-title" id="videoModalTitle"></div>
+    <div class="video-modal-meta" id="videoModalMeta"></div>
+  </div>
+</div>
+
+<!-- ═══════════ BLOG POST MODAL ═══════════ -->
+<div class="blog-modal" id="blogModal">
+  <div class="blog-modal-nav">
+    <button class="blog-modal-back" onclick="closeBlogModal()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to Blog
+    </button>
+  </div>
+  <div class="blog-modal-content">
+    <div class="blog-modal-category" id="modalPostCategory"></div>
+    <h1 class="blog-modal-title" id="modalPostTitle"></h1>
+    <div class="blog-modal-author">
+      <div class="avatar" id="modalPostAvatar"></div>
+      <div>
+        <div class="blog-modal-author-name" id="modalPostAuthor"></div>
+        <div class="blog-modal-author-date" id="modalPostDate"></div>
+      </div>
+    </div>
+    <img class="blog-modal-hero-img" id="modalPostImage" src="" alt="">
+    <div class="blog-modal-body" id="modalPostBody"></div>
+  </div>
+</div>
+
+<!-- ═══════════ HONOR PREVIEW MODAL ═══════════ -->
+<div class="honor-modal" id="honorModal" onclick="handleHonorModalClick(event)">
+  <div class="honor-modal-card">
+    <div class="honor-modal-head">
+      <span class="honor-modal-year" id="honorModalYear"></span>
+      <button type="button" class="honor-modal-close" onclick="closeHonorPreview()" aria-label="Close honor preview">✕</button>
+    </div>
+    <div class="honor-modal-body">
+      <h2 class="honor-modal-title" id="honorModalTitle"></h2>
+      <div class="honor-modal-desc" id="honorModalDesc"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ TOAST ═══════════ -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════
+//  DATA STORE
+// ══════════════════════════════════════════════
+
+const DEFAULT_VIDEOS = [
+  {
+    id: 'v1', title: 'Migrating to Linear 101', category: 'Engineering',
+    desc: 'Linear helps streamline software projects, sprints, tasks, and bug tracking. Here\'s how to get started.',
+    author: 'Jonathan Wills', date: '19 Jan 2022', duration: '14 min',
+    thumb: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&auto=format&fit=crop&q=70',
+    src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', type: 'youtube'
+  },
+  {
+    id: 'v2', title: 'Building your API Stack', category: 'Code',
+    desc: 'The rise of RESTful APIs has been met by a rise in tools for creating, testing, and managing them.',
+    author: 'Lana Steiner', date: '18 Jan 2022', duration: '22 min',
+    thumb: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600&auto=format&fit=crop&q=70',
+    src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', type: 'youtube'
+  },
+  {
+    id: 'v3', title: 'Bill Walsh Leadership Lessons', category: 'Leadership',
+    desc: 'Like to know the secrets of transforming a 2-14 team into a 3x Super Bowl winning Dynasty?',
+    author: 'Eve Wilkins', date: '18 Jan 2022', duration: '35 min',
+    thumb: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&auto=format&fit=crop&q=70',
+    src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', type: 'youtube'
+  },
+  {
+    id: 'v4', title: 'PM Mental Models', category: 'Product',
+    desc: 'Mental models are simple expressions of complex processes or relationships for product managers.',
+    author: 'Eve Wilkins', date: '18 Jan 2022', duration: '17 min',
+    thumb: 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=600&auto=format&fit=crop&q=70',
+    src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', type: 'youtube'
+  },
+  {
+    id: 'v5', title: 'What is Wireframing?', category: 'Design',
+    desc: 'Introduction to Wireframing and its Principles. Learn from the best in the industry.',
+    author: 'Lana Steiner', date: '18 Jan 2022', duration: '11 min',
+    thumb: 'https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=600&auto=format&fit=crop&q=70',
+    src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', type: 'youtube'
+  },
+  {
+    id: 'v6', title: 'How Collaboration Makes Us Better Designers', category: 'Design',
+    desc: 'Collaboration can make our teams stronger, and our individual designs better.',
+    author: 'Jonathan Wills', date: '19 Jan 2022', duration: '28 min',
+    thumb: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&auto=format&fit=crop&q=70',
+    src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', type: 'youtube'
+  }
+];
+
+const DEFAULT_POSTS = [
+  {
+    id: 'p0',
+    title: 'Free Money for School Is Real — Here\'s Exactly How to Get It',
+    category: 'Student Finance',
+    excerpt: 'Billions of dollars in grant money go unclaimed every single year. The students who graduate debt-free aren\'t luckier than you — they just knew where to look.',
+    author: 'Student Success Academy',
+    date: '4 Apr 2025',
+    image: 'hero-poster.jpg',
+    html: true,
+    body: `<div class="post-hook">
+  <p class="post-lead">Let's be direct: college is expensive. Tuition, housing, textbooks, fees — the cost adds up fast, and millions of students end up drowning in loan debt before they've even stepped into their first career. But here's what nobody tells you at orientation:</p>
+  <div class="post-callout">
+    <span class="callout-icon">💡</span>
+    <div>
+      <strong>Billions of dollars in grant money go unclaimed every single year.</strong>
+      <p>Not loans. Not scholarships you have to compete for. Free grant money — sitting there, waiting to be claimed by students exactly like you.</p>
+    </div>
+  </div>
+  <p>The students who graduate without crippling debt aren't smarter or luckier. They simply knew where to look and how to apply. This guide shows you exactly what they know.</p>
+</div>
+
+<h2 class="post-h2">Grants vs. Loans — Know the Difference</h2>
+<p>Before anything else, this distinction matters more than any other in this article:</p>
+<div class="post-compare">
+  <div class="compare-card compare-bad">
+    <div class="compare-label">❌ A Loan</div>
+    <p>Money you borrow and must pay back — with interest — for up to 20 years after graduation.</p>
+  </div>
+  <div class="compare-card compare-good">
+    <div class="compare-label">✅ A Grant</div>
+    <p>Money given to you based on need or qualification. You keep it. No strings attached. No repayment. Ever.</p>
+  </div>
+</div>
+<p>Every dollar you receive in grants is a dollar you won't be paying back for the next two decades. That's why understanding them is one of the most financially important things a student can do.</p>
+
+<h2 class="post-h2">1. Federal Grants — Start Here First</h2>
+<p>The U.S. federal government is the single largest source of grant funding for students. If you qualify, this is your foundation — apply before anything else.</p>
+
+<div class="post-grant-card">
+  <div class="grant-tag">Most Accessible</div>
+  <h3 class="grant-title">Pell Grant</h3>
+  <p class="grant-amount">Up to $7,395 / year</p>
+  <p>The most well-known federal grant. Need-based, available to undergraduates, and the first place every student should look.</p>
+  <ul class="post-ul">
+    <li><strong>Who qualifies:</strong> Students with demonstrated financial need who haven't earned a bachelor's degree.</li>
+    <li><strong>How to apply:</strong> Complete the FAFSA at studentaid.gov — free to file.</li>
+    <li><strong>Key tip:</strong> Apply the moment FAFSA opens on October 1st. Funds are first-come, first-served.</li>
+  </ul>
+</div>
+
+<div class="post-grant-card">
+  <div class="grant-tag">Additional Need-Based</div>
+  <h3 class="grant-title">Federal Supplemental Educational Opportunity Grant (FSEOG)</h3>
+  <p class="grant-amount">$100 – $4,000 / year</p>
+  <p>An additional grant for students with exceptional need. Pell Grant recipients with the greatest need receive first priority. Distributed through your school's financial aid office.</p>
+</div>
+
+<div class="post-grant-card">
+  <div class="grant-tag">Future Educators</div>
+  <h3 class="grant-title">TEACH Grant</h3>
+  <p class="grant-amount">Up to $4,000 / year</p>
+  <p>For students who plan to teach a high-need subject in a low-income school for at least four years after graduation. <em>Important: if you don't fulfill the commitment, it converts to a loan.</em></p>
+</div>
+
+<h2 class="post-h2">2. State Grants — Often Overlooked, Often Substantial</h2>
+<p>Almost every U.S. state runs its own grant programs for residents. These are massively underutilized simply because students don't know they exist.</p>
+<div class="post-state-grid">
+  <div class="state-item"><span class="state-name">California</span><span class="state-grant">Cal Grant — up to $12,570/yr</span></div>
+  <div class="state-item"><span class="state-name">New York</span><span class="state-grant">Excelsior Scholarship — full tuition at SUNY/CUNY</span></div>
+  <div class="state-item"><span class="state-name">Texas</span><span class="state-grant">TEXAS Grant — covers substantial tuition</span></div>
+  <div class="state-item"><span class="state-name">Florida</span><span class="state-grant">FSAG — need-based aid statewide</span></div>
+  <div class="state-item"><span class="state-name">Pennsylvania</span><span class="state-grant">PHEAA Grant — up to $4,123/yr</span></div>
+  <div class="state-item"><span class="state-name">Illinois</span><span class="state-grant">MAP Grant — up to $5,940/yr</span></div>
+</div>
+<div class="post-tip">
+  <strong>Action Step:</strong> Search "[Your State] + college grant program" and visit your state's higher education agency website. Many students find thousands of dollars they had no idea existed.
+</div>
+
+<h2 class="post-h2">3. Institutional Grants — Your School Wants to Help</h2>
+<p>Colleges set aside significant portions of their own budgets to award grants directly. The amount depends on the school — well-endowed universities can meet 100% of demonstrated financial need.</p>
+<ol class="post-ol">
+  <li>Apply for admission — grants can't be offered until you're in.</li>
+  <li>Complete the FAFSA and, if required, the CSS Profile.</li>
+  <li>Review your financial aid award letter carefully.</li>
+  <li><strong>Don't be afraid to appeal.</strong> Job loss, medical bills, or major life changes can justify a reassessment — ask for a professional judgment review.</li>
+  <li>Compare offers from multiple schools and use them as leverage when negotiating.</li>
+</ol>
+
+<h2 class="post-h2">4. Private & Specialty Grants — The Hidden Goldmine</h2>
+<p>Corporations, nonprofits, foundations, and local organizations offer grants that most students never apply for — simply because they don't know to look.</p>
+<ul class="post-ul">
+  <li><strong>Field of Study Grants:</strong> Healthcare, engineering, education, business, and the arts all have organizations that fund students in those fields.</li>
+  <li><strong>Identity & Background Grants:</strong> First-generation students, women in STEM, veterans, students with disabilities — there are dedicated programs for each.</li>
+  <li><strong>Community & Regional Grants:</strong> Local foundations, Rotary clubs, and civic organizations award grants to students from specific cities and counties.</li>
+  <li><strong>Employer-Based Grants:</strong> Many large corporations offer tuition grants for employees or their children.</li>
+</ul>
+<div class="post-tip"><strong>Where to search:</strong> Fastweb.com, Scholarships.com, Cappex, and the College Board's Scholarship Search are excellent free databases.</div>
+
+<h2 class="post-h2">5 Strategies That Separate Grant Winners from Everyone Else</h2>
+<ol class="post-ol post-ol-bold">
+  <li><strong>File FAFSA the moment it opens.</strong> October 1st. Not October 15th. Day one. Many grants are first-come, first-served.</li>
+  <li><strong>Apply to more grants, not just bigger ones.</strong> A $500 grant with 12 applicants is far more winnable than a $5,000 grant with 10,000.</li>
+  <li><strong>Write essays that tell your genuine story.</strong> Grant committees read thousands of applications. Specific, honest, personal stories stand out. Generic ones get dismissed instantly.</li>
+  <li><strong>Appeal your financial aid award.</strong> The first offer is rarely the final offer. Ask.</li>
+  <li><strong>Reapply every single year.</strong> FAFSA must be renewed annually. Your circumstances may qualify you for more aid as time goes on.</li>
+</ol>
+
+<div class="post-callout post-callout-dark">
+  <span class="callout-icon">⚠️</span>
+  <div>
+    <strong>Here's the hard truth most students learn too late.</strong>
+    <p>Every year, students read articles like this one, feel motivated — and then get overwhelmed. The forms are confusing. The deadlines pile up. Essays feel impossible. And the grant money that could have covered their tuition sits unclaimed because they didn't have the right support system.</p>
+    <p style="margin-top:10px"><em>Information alone doesn't get you funded. A system does.</em></p>
+  </div>
+</div>
+
+<div class="post-cta-block">
+  <div class="cta-eyebrow">Student Success Academy</div>
+  <h2 class="cta-headline">You Don't Have to Figure This Out Alone</h2>
+  <p class="cta-sub">Inside the <strong>Student Success Community on Skool</strong>, you get everything you need to go from overwhelmed to fully funded:</p>
+  <ul class="cta-checklist">
+    <li>✦ A complete, updated grant &amp; scholarship database — with deadlines flagged and eligibility clearly listed</li>
+    <li>✦ Step-by-step FAFSA walkthroughs — so you never make a costly mistake</li>
+    <li>✦ Essay templates and live feedback — frameworks that make your application stand out</li>
+    <li>✦ A community of students just like you — sharing wins, asking questions, holding each other accountable</li>
+    <li>✦ Expert coaches and live Q&amp;A sessions — financial aid specialists answering your specific questions</li>
+    <li>✦ A deadline tracker so you never miss an opportunity worth thousands of dollars</li>
+  </ul>
+  <div class="cta-proof">Members of our community have collectively secured over <strong>$2.3 million</strong> in grant and scholarship funding — not students with perfect GPAs or wealthy families. Students who showed up, followed the system, and applied.</div>
+  <a href="https://skool.com/studentsuccessacademy" class="cta-btn" target="_blank">Join the Community on Skool →</a>
+  <p class="cta-fine">Your education shouldn't cost you your future. Let's fix that — together.</p>
+</div>`
+  },
+  {
+    id: 'p1', title: 'Migrating to Linear 101', category: 'Engineering',
+    excerpt: 'Linear helps streamline software projects, sprints, tasks, and bug tracking. Here\'s how to get started.',
+    body: 'Linear is a project management tool built for modern software teams. This post covers everything you need to know about migrating from your current tool to Linear.\n\nLinear\'s keyboard-first design and blazing speed make it a favorite among engineering teams at companies like Notion, Vercel, and Raycast.\n\nGetting started is simple: import your existing issues, set up your cycles, and invite your team.',
+    author: 'Jonathan Wills', date: '19 Jan 2022',
+    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=900&auto=format&fit=crop&q=75'
+  },
+  {
+    id: 'p2', title: 'Building your API Stack', category: 'Code',
+    excerpt: 'The rise of RESTful APIs has been met by a rise in tools for creating, testing, and managing them.',
+    body: 'APIs are the backbone of modern web applications. Whether you\'re building a simple web app or a complex microservices architecture, having a solid API strategy is critical.\n\nIn this post, we\'ll walk through the tools and techniques that will help you build a robust API stack from scratch.',
+    author: 'Lana Steiner', date: '18 Jan 2022',
+    image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=900&auto=format&fit=crop&q=75'
+  },
+  {
+    id: 'p3', title: 'Bill Walsh Leadership Lessons', category: 'Leadership',
+    excerpt: 'Like to know the secrets of transforming a 2-14 team into a 3x Super Bowl winning Dynasty?',
+    body: 'Bill Walsh\'s "The Score Takes Care of Itself" is one of the most influential leadership books ever written. Walsh believed that if you set the highest standards in every area of operation, the results would follow.\n\nHis philosophy: focus on the process, not the outcome. Build systems, train relentlessly, and trust your team.',
+    author: 'Eve Wilkins', date: '18 Jan 2022',
+    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=900&auto=format&fit=crop&q=75'
+  },
+  {
+    id: 'p4', title: 'PM Mental Models', category: 'Product',
+    excerpt: 'Mental models are simple expressions of complex processes or relationships.',
+    body: 'Great product managers think differently. They use mental models to simplify complex decisions and see patterns others miss.\n\nSome essential PM mental models: First principles thinking, Second-order effects, Inversion, and Opportunity cost. Understanding these frameworks will level up your product thinking dramatically.',
+    author: 'Eve Wilkins', date: '18 Jan 2022',
+    image: 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=900&auto=format&fit=crop&q=75'
+  },
+  {
+    id: 'p5', title: 'What is Wireframing?', category: 'Design',
+    excerpt: 'Introduction to Wireframing and its Principles. Learn from the best in the industry.',
+    body: 'Wireframing is the first step in the design process. It\'s a low-fidelity sketch that helps you establish the basic structure of a page before adding visual design or content.\n\nA good wireframe answers: What information exists on this page? How is it arranged? What actions can users take?',
+    author: 'Lana Steiner', date: '18 Jan 2022',
+    image: 'https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=900&auto=format&fit=crop&q=75'
+  },
+  {
+    id: 'p6', title: 'How Collaboration Makes Us Better Designers', category: 'Design',
+    excerpt: 'Collaboration can make our teams stronger, and our individual designs better.',
+    body: 'Design is never done in isolation. The best designers actively seek feedback, work closely with engineers and PMs, and build a culture of critique that pushes the work forward.\n\nIn this post, we explore the habits and rituals that high-performing design teams use to stay collaborative.',
+    author: 'Jonathan Wills', date: '19 Jan 2022',
+    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&auto=format&fit=crop&q=75'
+  }
+];
+
+function loadData() {
+  try {
+    const v = localStorage.getItem('untitled_videos');
+    return {
+      videos: v ? JSON.parse(v) : [...DEFAULT_VIDEOS],
+      posts: [...DEFAULT_POSTS]
+    };
+  } catch(e) {
+    return { videos: [...DEFAULT_VIDEOS], posts: [...DEFAULT_POSTS] };
+  }
+}
+
+function saveData(videos, posts) {
+  try {
+    localStorage.setItem('untitled_videos', JSON.stringify(videos));
+  } catch(e) {}
+}
+
+async function loadCmsPosts() {
+  const candidates = [
+    'data/posts.json',
+    '/data/posts.json'
+  ];
+
+  for (const url of candidates) {
+    try {
+      const res = await fetch(url + (url.includes('?') ? '&' : '?') + 'v=' + Date.now(), { cache: 'no-store' });
+      if (!res.ok) continue;
+      const data = await res.json();
+      const incoming = Array.isArray(data) ? data : (Array.isArray(data.posts) ? data.posts : null);
+      if (!incoming) continue;
+      state.posts = mergePosts(incoming.map((post, index) => ({
+        id: post.id || `post-${index + 1}`,
+        title: post.title || 'Untitled Post',
+        category: post.category || 'Blog',
+        excerpt: post.excerpt || '',
+        body: post.body || '',
+        html: !!post.html,
+        author: post.author || 'Admin',
+        date: post.date || new Date().toLocaleDateString(),
+        image: post.image || '',
+        source: post.source || 'cms'
+      })), state.posts.filter(post => post.source === 'marblism'));
+      renderBlog();
+      return true;
+    } catch (e) {}
+  }
+
+  return false;
+}
+
+async function loadRepoPosts() {
+  const apiUrl = 'https://api.github.com/repos/nexusluma365/NaphtaliBryant/contents/content/posts';
+
+  try {
+    const res = await fetch(apiUrl + '?v=' + Date.now(), {
+      cache: 'no-store',
+      headers: { Accept: 'application/vnd.github+json' }
+    });
+    if (!res.ok) return false;
+
+    const files = await res.json();
+    if (!Array.isArray(files)) return false;
+
+    const markdownFiles = files.filter(file => file.type === 'file' && /\.md$/i.test(file.name));
+    const loaded = await Promise.all(markdownFiles.map(async (file, index) => {
+      try {
+        const contentRes = await fetch((file.download_url || file.url) + ((file.download_url || file.url).includes('?') ? '&' : '?') + 'v=' + Date.now(), { cache: 'no-store' });
+        if (!contentRes.ok) return null;
+        const raw = await contentRes.text();
+        return parseMarkdownPost(raw, file, index);
+      } catch (e) {
+        return null;
+      }
+    }));
+
+    const repoPosts = loaded.filter(Boolean);
+    state.posts = mergePosts(state.posts.filter(post => post.source !== 'marblism'), repoPosts);
+    renderBlog();
+    return repoPosts.length > 0;
+  } catch (e) {
+    return false;
+  }
+}
+
+function parseMarkdownPost(raw, file, index) {
+  const parsed = parseFrontmatter(raw || '');
+  const attrs = parsed.attributes || {};
+  const body = (parsed.body || '').trim();
+  const excerpt = attrs.excerpt || body.split(/\n+/).find(Boolean) || '';
+
+  return {
+    id: file.name || `repo-post-${index + 1}`,
+    title: attrs.title || file.name.replace(/\.md$/i, '').replace(/-/g, ' '),
+    category: attrs.category || 'Blog',
+    excerpt,
+    body,
+    html: false,
+    author: attrs.author || 'Naphtali Bryant',
+    date: formatDisplayDate(attrs.date || file.git_url || ''),
+    image: attrs.image || '',
+    slug: file.name.replace(/\.md$/i, ''),
+    source: 'marblism',
+    repoUrl: file.html_url || ''
+  };
+}
+
+function parseFrontmatter(raw) {
+  if (!raw.startsWith('---')) {
+    return { attributes: {}, body: raw };
+  }
+
+  const match = raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
+  if (!match) {
+    return { attributes: {}, body: raw };
+  }
+
+  const [, frontmatter, body] = match;
+  const attributes = {};
+  let currentListKey = null;
+
+  frontmatter.split('\n').forEach(line => {
+    const listMatch = line.match(/^\s*-\s*(.+)$/);
+    if (listMatch && currentListKey) {
+      if (!Array.isArray(attributes[currentListKey])) attributes[currentListKey] = [];
+      attributes[currentListKey].push(listMatch[1].trim().replace(/^['"]|['"]$/g, ''));
+      return;
+    }
+
+    const keyMatch = line.match(/^([A-Za-z0-9_]+):\s*(.*)$/);
+    if (!keyMatch) return;
+
+    const key = keyMatch[1];
+    const value = keyMatch[2].trim();
+    currentListKey = null;
+
+    if (!value) {
+      attributes[key] = [];
+      currentListKey = key;
+      return;
+    }
+
+    attributes[key] = value.replace(/^['"]|['"]$/g, '');
+  });
+
+  return { attributes, body };
+}
+
+function mergePosts(primaryPosts, secondaryPosts) {
+  const map = new Map();
+
+  [...primaryPosts, ...secondaryPosts].forEach((post, index) => {
+    const key = [post.slug, post.title, post.date].filter(Boolean).join('::') || `post-${index}`;
+    if (!map.has(key) || post.source === 'marblism') {
+      map.set(key, post);
+    }
+  });
+
+  return Array.from(map.values()).sort((a, b) => parseDateValue(b.date) - parseDateValue(a.date));
+}
+
+function parseDateValue(value) {
+  if (!value) return 0;
+  const parsed = new Date(value);
+  if (!isNaN(parsed.getTime())) return parsed.getTime();
+  return 0;
+}
+
+function formatDisplayDate(value) {
+  const timestamp = parseDateValue(value);
+  if (!timestamp) return new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  return new Date(timestamp).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+let state = loadData();
+
+// ══════════════════════════════════════════════
+//  TABS
+// ══════════════════════════════════════════════
+
+let currentTab = 'about';
+
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  const activeTab = Array.from(document.querySelectorAll('.nav-tab')).find(node => node.textContent.includes('About'));
+  if (activeTab) activeTab.classList.add('active');
+  if (tab === 'videos') renderVideos();
+  renderBlog();
+}
+
+// ══════════════════════════════════════════════
+//  RENDER VIDEOS
+// ══════════════════════════════════════════════
+
+function renderVideos() {
+  const videos = state.videos.slice(0, 9);
+  const rest = videos.slice(1);
+
+  // Featured
+  if (state.videos.length > 0) {
+    const feat = state.videos[0];
+    document.getElementById('featuredTitle').textContent = feat.title;
+    document.getElementById('featuredAuthor').textContent = feat.author;
+    document.getElementById('featuredDate').textContent = feat.date;
+    document.getElementById('featuredDuration').textContent = feat.duration;
+    document.getElementById('featuredThumb').src = feat.thumb || '';
+    document.getElementById('featuredHero').dataset.id = feat.id;
+  }
+
+  // ── Featured hero edit trigger ──
+  const heroEl = document.getElementById('featuredHero');
+  // Remove old trigger if any
+  heroEl.querySelectorAll('.edit-trigger-hero').forEach(e => e.remove());
+  if (adminMode && state.videos.length > 0) {
+    const heroTrig = document.createElement('button');
+    heroTrig.className = 'edit-trigger-hero';
+    heroTrig.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Edit Featured`;
+    heroTrig.onclick = (e) => { e.stopPropagation(); openEditDrawer('video', 0); };
+    heroEl.appendChild(heroTrig);
+  }
+
+  const grid = document.getElementById('videoGrid');
+  grid.innerHTML = '';
+  rest.forEach((v, i) => {
+    const realIdx = i + 1; // index in state.videos (0 is featured)
+    const wrap = document.createElement('div');
+    wrap.className = 'editable-wrap';
+
+    const card = document.createElement('div');
+    card.className = 'video-card';
+    card.style.animationDelay = (i * 0.06) + 's';
+    card.onclick = () => { if (!adminMode) openVideoModal(v); };
+    card.innerHTML = `
+      <div class="video-thumb-wrap">
+        <img class="video-thumb" src="${v.thumb || 'https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=600&auto=format&fit=crop&q=70'}" alt="${v.title}" loading="lazy" decoding="async" onerror="this.src='https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=600&auto=format&fit=crop&q=70'">
+        <div class="video-play-overlay">
+          <div class="mini-play">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <span class="video-duration">${v.duration || '—'}</span>
+      </div>
+      <div class="video-info">
+        <div class="video-category">${v.category || 'Video'}</div>
+        <div class="video-title">${v.title}</div>
+        <div class="video-desc">${v.desc || ''}</div>
+        <div class="video-meta">
+          <div class="avatar">${v.author ? v.author[0] : '?'}</div>
+          <span>${v.author}</span>
+          <span>·</span>
+          <span>${v.date}</span>
+        </div>
+      </div>
+    `;
+
+    // Edit trigger button
+    const trig = document.createElement('button');
+    trig.className = 'edit-trigger';
+    trig.title = 'Edit this video';
+    trig.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`;
+    trig.onclick = (e) => { e.stopPropagation(); openEditDrawer('video', realIdx); };
+
+    wrap.appendChild(card);
+    wrap.appendChild(trig);
+    grid.appendChild(wrap);
+  });
+}
+
+function playFeatured() {
+  if (state.videos.length > 0) openVideoModal(state.videos[0]);
+}
+
+function openVideoModal(v) {
+  document.getElementById('videoModalTitle').textContent = v.title;
+  document.getElementById('videoModalMeta').textContent = `${v.author} · ${v.date} · ${v.duration || ''}`;
+
+  const player = document.getElementById('videoPlayer');
+  player.innerHTML = '';
+
+  if (v.type === 'upload' && v.src) {
+    const vid = document.createElement('video');
+    vid.src = v.src;
+    vid.controls = true;
+    vid.autoplay = true;
+    vid.style.cssText = 'width:100%;height:100%;object-fit:contain;background:#000;';
+    player.appendChild(vid);
+  } else {
+    let embedUrl = v.src;
+    // Convert YouTube watch URLs to embed
+    if (embedUrl && embedUrl.includes('youtube.com/watch')) {
+      const vid = new URL(embedUrl).searchParams.get('v');
+      if (vid) embedUrl = `https://www.youtube.com/embed/${vid}?autoplay=1`;
+    } else if (embedUrl && embedUrl.includes('youtu.be/')) {
+      const vid = embedUrl.split('youtu.be/')[1].split('?')[0];
+      embedUrl = `https://www.youtube.com/embed/${vid}?autoplay=1`;
+    } else if (embedUrl && embedUrl.includes('vimeo.com/')) {
+      const vid = embedUrl.replace(/.*vimeo\.com\//, '').split('/')[0];
+      embedUrl = `https://player.vimeo.com/video/${vid}?autoplay=1`;
+    } else if (embedUrl && embedUrl.includes('youtube.com/embed/')) {
+      embedUrl = embedUrl + (embedUrl.includes('?') ? '&' : '?') + 'autoplay=1';
+    }
+    const iframe = document.createElement('iframe');
+    iframe.src = embedUrl || '';
+    iframe.allow = 'autoplay; fullscreen; picture-in-picture';
+    iframe.allowFullscreen = true;
+    player.appendChild(iframe);
+  }
+
+  document.getElementById('videoModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeVideoModal() {
+  document.getElementById('videoModal').classList.remove('open');
+  document.getElementById('videoPlayer').innerHTML = '';
+  document.body.style.overflow = '';
+}
+
+// ══════════════════════════════════════════════
+//  RENDER BLOG
+// ══════════════════════════════════════════════
+
+function readTime(post) {
+  const words = ((post.body || '') + (post.excerpt || '')).split(/\s+/).length;
+  return Math.max(1, Math.round(words / 200)) + ' min read';
+}
+
+function renderBlog() {
+  const posts = state.posts;
+  if (!posts.length) return;
+
+  // ── Featured editorial hero ──
+  const feat = posts[0];
+  document.getElementById('blogHeroImg').src = feat.image || 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=900&auto=format&fit=crop&q=80';
+  document.getElementById('blogHeroImg').alt = feat.title;
+  document.getElementById('blogHeroCategory').textContent = feat.category || 'Article';
+  document.getElementById('blogHeroReadTime').textContent = readTime(feat);
+  document.getElementById('blogHeroTitle').textContent = feat.title;
+  document.getElementById('blogHeroDesc').textContent = feat.excerpt || '';
+  document.getElementById('blogHeroAvatar').textContent = feat.author ? feat.author[0] : '?';
+  document.getElementById('blogHeroAuthor').textContent = feat.author;
+  document.getElementById('blogHeroDate').textContent = feat.date;
+  document.getElementById('blogFeaturedEl').onclick = () => openBlogPost(feat);
+  document.getElementById('blogHeroBtn').onclick = (e) => { e.stopPropagation(); openBlogPost(feat); };
+
+  // ── Featured article edit trigger ──
+  const featEl = document.getElementById('blogFeaturedEl');
+  featEl.querySelectorAll('.edit-trigger-editorial').forEach(e => e.remove());
+  if (adminMode && posts.length > 0) {
+    const featTrig = document.createElement('button');
+    featTrig.className = 'edit-trigger-editorial';
+    featTrig.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Edit`;
+    featTrig.onclick = (e) => { e.stopPropagation(); openEditDrawer('post', 0); };
+    featEl.appendChild(featTrig);
+    featEl.style.position = 'relative';
+  }
+
+  // ── Article grid ──
+  const grid = document.getElementById('blogGrid');
+  grid.innerHTML = '';
+  posts.slice(1, 10).forEach((p, i) => {
+    const realIdx = i + 1;
+    const fallback = 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&auto=format&fit=crop&q=70';
+
+    const wrap = document.createElement('div');
+    wrap.className = 'editable-wrap';
+    wrap.style.cssText = 'border-bottom:1px solid var(--border); border-right:1px solid var(--border); position:relative;';
+    // Remove per-card borders (wrap handles them)
+    const card = document.createElement('div');
+    card.className = 'article-card';
+    card.style.cssText = 'border:none; border-radius:0; animation-delay:' + (i*0.05) + 's';
+    card.onclick = () => { if (!adminMode) openBlogPost(p); };
+    card.innerHTML = `
+      <img class="article-card-img" src="${p.image || fallback}" alt="${p.title}" loading="lazy" decoding="async" onerror="this.src='${fallback}'">
+      <div class="article-card-eyebrow">
+        <span class="article-card-cat">${p.category || 'Article'}</span>
+        <span class="article-card-dot">·</span>
+        <span class="article-card-time">${readTime(p)}</span>
+      </div>
+      <div class="article-card-title">${p.title}</div>
+      <div class="article-card-excerpt">${p.excerpt || ''}</div>
+      <div class="article-card-byline">
+        <div class="article-card-avatar">${p.author ? p.author[0] : '?'}</div>
+        <span class="article-card-author">${p.author}</span>
+        <span class="article-card-sep">·</span>
+        <span class="article-card-date">${p.date}</span>
+      </div>
+    `;
+
+    const trig = document.createElement('button');
+    trig.className = 'edit-trigger';
+    trig.title = 'Edit this article';
+    trig.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`;
+    trig.onclick = (e) => { e.stopPropagation(); openEditDrawer('post', realIdx); };
+
+    wrap.appendChild(card);
+    wrap.appendChild(trig);
+    grid.appendChild(wrap);
+  });
+
+  renderAboutPosts();
+}
+
+function renderAboutPosts() {
+  const posts = state.posts;
+  if (!posts.length) return;
+
+  const feat = posts[0];
+  const fallback = 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=900&auto=format&fit=crop&q=80';
+  document.getElementById('aboutHeroImg').src = feat.image || fallback;
+  document.getElementById('aboutHeroImg').alt = feat.title;
+  document.getElementById('aboutHeroCategory').textContent = feat.category || 'Article';
+  document.getElementById('aboutHeroReadTime').textContent = readTime(feat);
+  document.getElementById('aboutHeroTitle').textContent = feat.title;
+  document.getElementById('aboutHeroDesc').textContent = feat.excerpt || '';
+  document.getElementById('aboutHeroAvatar').textContent = feat.author ? feat.author[0] : '?';
+  document.getElementById('aboutHeroAuthor').textContent = feat.author;
+  document.getElementById('aboutHeroDate').textContent = feat.date;
+  document.getElementById('aboutFeaturedEl').onclick = () => openBlogPost(feat);
+  document.getElementById('aboutHeroBtn').onclick = (e) => { e.stopPropagation(); openBlogPost(feat); };
+
+  const grid = document.getElementById('aboutBlogGrid');
+  grid.innerHTML = '';
+  posts.slice(1, 7).forEach((post, index) => {
+    const card = document.createElement('div');
+    card.className = 'article-card';
+    card.style.animationDelay = (index * 0.05) + 's';
+    card.onclick = () => openBlogPost(post);
+    card.innerHTML = `
+      <img class="article-card-img" src="${post.image || fallback}" alt="${post.title}" loading="lazy" decoding="async" onerror="this.src='${fallback}'">
+      <div class="article-card-eyebrow">
+        <span class="article-card-cat">${post.category || 'Article'}</span>
+        <span class="article-card-dot">·</span>
+        <span class="article-card-time">${readTime(post)}</span>
+      </div>
+      <div class="article-card-title">${post.title}</div>
+      <div class="article-card-excerpt">${post.excerpt || ''}</div>
+      <div class="article-card-byline">
+        <div class="article-card-avatar">${post.author ? post.author[0] : '?'}</div>
+        <span class="article-card-author">${post.author}</span>
+        <span class="article-card-sep">·</span>
+        <span class="article-card-date">${post.date}</span>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function openBlogPost(post) {
+  if (typeof post === 'number') post = state.posts[post];
+  if (!post) return;
+  document.getElementById('modalPostCategory').textContent = post.category || '';
+  document.getElementById('modalPostTitle').textContent = post.title;
+  document.getElementById('modalPostAuthor').textContent = post.author;
+  document.getElementById('modalPostDate').textContent = post.date;
+  document.getElementById('modalPostAvatar').textContent = post.author ? post.author[0] : '?';
+  const img = document.getElementById('modalPostImage');
+  if (post.image) { img.src = post.image; img.style.display = 'block'; }
+  else img.style.display = 'none';
+  const bodyEl = document.getElementById('modalPostBody');
+  if (post.html) {
+    bodyEl.classList.add('rich');
+    bodyEl.innerHTML = post.body || '';
+  } else {
+    bodyEl.classList.remove('rich');
+    bodyEl.textContent = post.body || post.excerpt || '';
+  }
+  document.getElementById('blogModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeBlogModal() {
+  document.getElementById('blogModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function openHonorPreview(year, title, description) {
+  document.getElementById('honorModalYear').textContent = year || '';
+  document.getElementById('honorModalTitle').textContent = title || '';
+  document.getElementById('honorModalDesc').textContent = description || '';
+  document.getElementById('honorModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeHonorPreview() {
+  document.getElementById('honorModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleHonorModalClick(event) {
+  if (event.target === document.getElementById('honorModal')) {
+    closeHonorPreview();
+  }
+}
+
+// ══════════════════════════════════════════════
+//  TERMINAL AUTH
+// ══════════════════════════════════════════════
+
+const PASSWORD = 'StudentSuccess123!';
+let isAuthenticated = false;
+let adminMode = false;
+
+document.addEventListener('keydown', e => {
+  if (e.shiftKey && (e.code === 'Digit9' || e.key === '9' || e.key === ')')) openTerminal();
+  if (e.key === 'Escape') {
+    if (document.getElementById('editDrawer').classList.contains('open')) { closeDrawer(); return; }
+    if (document.getElementById('videoModal').classList.contains('open')) { closeVideoModal(); return; }
+    if (document.getElementById('blogModal').classList.contains('open')) { closeBlogModal(); return; }
+    if (document.getElementById('honorModal').classList.contains('open')) { closeHonorPreview(); return; }
+    if (document.getElementById('terminalOverlay').classList.contains('open')) { closeTerminal(); return; }
+    if (document.getElementById('adminOverlay').classList.contains('open')) { closeAdmin(); return; }
+  }
+});
+
+function openTerminal() {
+  const overlay = document.getElementById('terminalOverlay');
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('terminalOutput').innerHTML = '';
+  // Show different prompt if already authenticated
+  if (isAuthenticated) {
+    document.getElementById('terminalOutput').innerHTML =
+      '<div class="terminal-success">✓ Already authenticated. Type "edit" to enter admin mode or "exit" to leave.</div>';
+  }
+  setTimeout(() => document.getElementById('terminalInput').focus(), 100);
+}
+
+function closeTerminal() {
+  document.getElementById('terminalOverlay').classList.remove('open');
+  document.getElementById('terminalInput').value = '';
+  document.getElementById('terminalOutput').innerHTML = '';
+  document.body.style.overflow = '';
+}
+
+function handleTerminalOverlayClick(e) {
+  if (e.target === document.getElementById('terminalOverlay')) closeTerminal();
+}
+
+document.getElementById('terminalInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    const val = this.value.trim();
+    this.value = '';
+    const output = document.getElementById('terminalOutput');
+    if (!isAuthenticated) {
+      if (val === PASSWORD) {
+        output.innerHTML = '<div class="terminal-success">✓ Authentication successful. Entering Admin Mode…</div>';
+        isAuthenticated = true;
+        setTimeout(() => { closeTerminal(); activateAdminMode(); }, 900);
+      } else {
+        output.innerHTML = '<div class="terminal-error">✗ Incorrect password. Try again.</div>';
+        this.focus();
+      }
+    } else {
+      // Already authenticated — accept commands
+      if (val === 'exit' || val === 'quit') {
+        exitAdminMode(); closeTerminal();
+      } else if (val === 'edit') {
+        closeTerminal(); activateAdminMode();
+      } else {
+        output.innerHTML = '<div class="terminal-error">Unknown command. Try "edit" or "exit".</div>';
+        this.focus();
+      }
+    }
+  }
+});
+
+// ══════════════════════════════════════════════
+//  ADMIN MODE — PAGE-LEVEL INLINE EDITING
+// ══════════════════════════════════════════════
+
+function activateAdminMode() {
+  adminMode = true;
+  document.body.classList.add('admin-mode');
+  document.getElementById('adminBar').classList.add('visible');
+  // Re-render both tabs so edit triggers appear
+  renderVideos();
+  renderBlog();
+  showToast('✏️ Admin mode — click any card to edit');
+}
+
+function exitAdminMode() {
+  adminMode = false;
+  document.body.classList.remove('admin-mode');
+  document.getElementById('adminBar').classList.remove('visible');
+  closeDrawer();
+  renderVideos();
+  renderBlog();
+  showToast('Admin mode off');
+}
+
+// ── Add panel (slide-up) for adding NEW content ──
+function openAddPanel(type) {
+  document.getElementById('adminOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  switchAdminTab(type === 'video' ? 'add-video' : 'add-post');
+}
+
+function openAdmin() {
+  return;
+}
+
+function closeAdmin() {
+  document.getElementById('adminOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleAdminOverlayClick(e) {
+  if (e.target === document.getElementById('adminOverlay')) closeAdmin();
+}
+
+let currentAdminTab = 'add-video';
+
+function switchAdminTab(tab) {
+  currentAdminTab = tab;
+  document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.admin-section').forEach(s => s.style.display = 'none');
+  const tabs = ['add-video', 'manage-videos', 'add-post', 'manage-posts'];
+  const idx = tabs.indexOf(tab);
+  document.querySelectorAll('.admin-tab')[idx].classList.add('active');
+  document.getElementById('admin-' + tab).style.display = 'block';
+  if (tab === 'manage-videos') renderManageVideos();
+  if (tab === 'manage-posts') renderManagePosts();
+}
+
+// ══════════════════════════════════════════════
+//  EDIT DRAWER
+// ══════════════════════════════════════════════
+
+let drawerType = null; // 'video' | 'post'
+let drawerIdx  = null; // index in state.videos / state.posts
+
+function openEditDrawer(type, idx) {
+  drawerType = type;
+  drawerIdx  = idx;
+  const drawer = document.getElementById('editDrawer');
+  const body   = document.getElementById('drawerBody');
+  const pill   = document.getElementById('drawerPill');
+  const title  = document.getElementById('drawerTitle');
+
+  if (type === 'video') {
+    const v = state.videos[idx];
+    pill.textContent  = 'Video';
+    title.textContent = 'Edit Video';
+    body.innerHTML = `
+      <div class="form-group">
+        <label>Title</label>
+        <input type="text" id="de-title" value="${esc(v.title)}">
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <input type="text" id="de-category" value="${esc(v.category)}">
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea id="de-desc" rows="3">${esc(v.desc || '')}</textarea>
+      </div>
+      <div class="form-group">
+        <label>Author</label>
+        <input type="text" id="de-author" value="${esc(v.author)}">
+      </div>
+      <div class="form-group">
+        <label>Date</label>
+        <input type="text" id="de-date" value="${esc(v.date)}">
+      </div>
+      <div class="form-group">
+        <label>Duration</label>
+        <input type="text" id="de-duration" value="${esc(v.duration || '')}">
+      </div>
+      <div class="form-group">
+        <label>Video URL (YouTube / Vimeo / direct)</label>
+        <input type="url" id="de-src" value="${esc(v.src || '')}">
+      </div>
+      <div class="form-group">
+        <label>Thumbnail URL</label>
+        <input type="url" id="de-thumb" value="${esc(v.thumb || '')}" oninput="previewDrawerImg(this)">
+        <img class="drawer-img-preview" id="de-img-preview" src="${esc(v.thumb || '')}" style="${v.thumb ? 'display:block' : 'display:none'}">
+      </div>
+    `;
+  } else {
+    const p = state.posts[idx];
+    pill.textContent  = 'Article';
+    title.textContent = 'Edit Article';
+    body.innerHTML = `
+      <div class="form-group">
+        <label>Title</label>
+        <input type="text" id="de-title" value="${esc(p.title)}">
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <input type="text" id="de-category" value="${esc(p.category || '')}">
+      </div>
+      <div class="form-group">
+        <label>Author</label>
+        <input type="text" id="de-author" value="${esc(p.author || '')}">
+      </div>
+      <div class="form-group">
+        <label>Date</label>
+        <input type="text" id="de-date" value="${esc(p.date || '')}">
+      </div>
+      <div class="form-group">
+        <label>Excerpt / Summary</label>
+        <textarea id="de-excerpt" rows="3">${esc(p.excerpt || '')}</textarea>
+      </div>
+      <div class="form-group">
+        <label>Full Article Body</label>
+        <textarea id="de-body" rows="7">${esc(p.html ? '' : (p.body || ''))}</textarea>
+        ${p.html ? '<p style="font-size:12px;color:var(--text-tertiary);margin-top:4px">⚠️ This post uses rich HTML — editing the body here will replace it with plain text.</p>' : ''}
+      </div>
+      <div class="form-group">
+        <label>Cover Image URL</label>
+        <input type="url" id="de-image" value="${esc(p.image || '')}" oninput="previewDrawerImg(this)">
+        <img class="drawer-img-preview" id="de-img-preview" src="${esc(p.image || '')}" style="${p.image ? 'display:block' : 'display:none'}">
+      </div>
+    `;
+  }
+
+  drawer.classList.add('open');
+  document.getElementById('drawerBackdrop').classList.add('open');
+}
+
+function esc(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function previewDrawerImg(input) {
+  const preview = document.getElementById('de-img-preview');
+  if (input.value) { preview.src = input.value; preview.style.display = 'block'; }
+  else preview.style.display = 'none';
+}
+
+function closeDrawer() {
+  document.getElementById('editDrawer').classList.remove('open');
+  document.getElementById('drawerBackdrop').classList.remove('open');
+  drawerType = null;
+  drawerIdx  = null;
+}
+
+function saveDrawer() {
+  if (drawerType === 'video') {
+    const v = state.videos[drawerIdx];
+    v.title    = document.getElementById('de-title').value.trim()    || v.title;
+    v.category = document.getElementById('de-category').value.trim() || v.category;
+    v.desc     = document.getElementById('de-desc').value.trim();
+    v.author   = document.getElementById('de-author').value.trim()   || v.author;
+    v.date     = document.getElementById('de-date').value.trim()     || v.date;
+    v.duration = document.getElementById('de-duration').value.trim();
+    v.src      = document.getElementById('de-src').value.trim()      || v.src;
+    v.thumb    = document.getElementById('de-thumb').value.trim()    || v.thumb;
+    // Auto-thumb for youtube if blank
+    if (!v.thumb && v.src) { const t = getYTThumb(v.src); if (t) v.thumb = t; }
+    saveData(state.videos, state.posts);
+    closeDrawer();
+    renderVideos();
+    showToast('✓ Video saved');
+  } else if (drawerType === 'post') {
+    const p = state.posts[drawerIdx];
+    p.title    = document.getElementById('de-title').value.trim()    || p.title;
+    p.category = document.getElementById('de-category').value.trim() || p.category;
+    p.author   = document.getElementById('de-author').value.trim()   || p.author;
+    p.date     = document.getElementById('de-date').value.trim()     || p.date;
+    p.excerpt  = document.getElementById('de-excerpt').value.trim();
+    const newBody = document.getElementById('de-body').value.trim();
+    if (newBody) { p.body = newBody; p.html = false; }
+    p.image    = document.getElementById('de-image').value.trim()    || p.image;
+    saveData(state.videos, state.posts);
+    closeDrawer();
+    renderBlog();
+    showToast('✓ Article saved');
+  }
+}
+
+function deleteDrawerItem() {
+  if (drawerType === null) return;
+  if (!confirm('Delete this item? This cannot be undone.')) return;
+  if (drawerType === 'video') {
+    state.videos.splice(drawerIdx, 1);
+    saveData(state.videos, state.posts);
+    closeDrawer(); renderVideos();
+    showToast('Video deleted');
+  } else {
+    state.posts.splice(drawerIdx, 1);
+    saveData(state.videos, state.posts);
+    closeDrawer(); renderBlog();
+    showToast('Article deleted');
+  }
+}
+
+// ── VIDEO SOURCE SELECTOR ──
+let currentSource = 'youtube';
+let uploadedFileUrl = null;
+
+function selectSource(el, val) {
+  currentSource = val;
+  document.querySelectorAll('.radio-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('url-input-group').style.display = val === 'upload' ? 'none' : 'block';
+  document.getElementById('file-input-group').style.display = val === 'upload' ? 'block' : 'none';
+}
+
+function handleDragOver(e) {
+  e.preventDefault();
+  document.getElementById('fileDrop').classList.add('dragover');
+}
+
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('fileDrop').classList.remove('dragover');
+  const file = e.dataTransfer.files[0];
+  if (file && file.type.startsWith('video/')) processVideoFile(file);
+}
+
+function handleFileSelect(e) {
+  const file = e.target.files[0];
+  if (file) processVideoFile(file);
+}
+
+function processVideoFile(file) {
+  const url = URL.createObjectURL(file);
+  uploadedFileUrl = url;
+  document.getElementById('fileLabel').textContent = file.name;
+  showToast('Video file loaded: ' + file.name);
+}
+
+// ── THUMB PREVIEW ──
+function previewThumb() {
+  const url = document.getElementById('videoThumb').value;
+  const preview = document.getElementById('thumbPreview');
+  if (url) { preview.src = url; preview.style.display = 'block'; }
+  else preview.style.display = 'none';
+}
+
+// ── YOUTUBE THUMBNAIL ──
+function getYTThumb(url) {
+  try {
+    let id = null;
+    if (url.includes('youtube.com/watch')) id = new URL(url).searchParams.get('v');
+    else if (url.includes('youtu.be/')) id = url.split('youtu.be/')[1].split('?')[0];
+    else if (url.includes('youtube.com/embed/')) id = url.split('embed/')[1].split('?')[0];
+    if (id) return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+  } catch(e) {}
+  return null;
+}
+
+function getVimeoThumb(url) {
+  // Vimeo thumbs require API — return placeholder
+  return 'https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=600&auto=format&fit=crop&q=70';
+}
+
+function saveVideo() {
+  const title = document.getElementById('videoTitle').value.trim();
+  if (!title) { showToast('Please enter a title'); return; }
+
+  let src = '', thumb = '';
+  if (currentSource === 'upload') {
+    src = uploadedFileUrl || '';
+    thumb = document.getElementById('videoThumb').value.trim();
+  } else {
+    src = document.getElementById('videoUrl').value.trim();
+    thumb = document.getElementById('videoThumb').value.trim();
+    if (!thumb && currentSource === 'youtube') thumb = getYTThumb(src) || '';
+    if (!thumb && currentSource === 'vimeo') thumb = getVimeoThumb(src);
+  }
+
+  const video = {
+    id: 'v' + Date.now(),
+    title,
+    category: document.getElementById('videoCategory').value.trim() || 'Video',
+    desc: document.getElementById('videoDesc').value.trim(),
+    author: document.getElementById('videoAuthor').value.trim() || 'Unknown',
+    date: new Date().toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'}),
+    duration: document.getElementById('videoDuration').value.trim() || '',
+    thumb,
+    src,
+    type: currentSource
+  };
+
+  // Cap at 9 videos (keep featured + 8)
+  if (state.videos.length >= 9) state.videos.pop();
+  state.videos.unshift(video);
+  saveData(state.videos, state.posts);
+  renderVideos();
+  clearVideoForm();
+  showToast('✓ Video published');
+  closeAdmin();
+  switchTab('about');
+}
+
+function clearVideoForm() {
+  ['videoUrl','videoTitle','videoCategory','videoDesc','videoAuthor','videoDuration','videoThumb'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('thumbPreview').style.display = 'none';
+  document.getElementById('fileLabel').textContent = 'Click to upload or drag & drop';
+  uploadedFileUrl = null;
+}
+
+function savePost() {
+  const title = document.getElementById('postTitle').value.trim();
+  if (!title) { showToast('Please enter a title'); return; }
+
+  const post = {
+    id: 'p' + Date.now(),
+    title,
+    category: document.getElementById('postCategory').value.trim() || 'Blog',
+    excerpt: document.getElementById('postExcerpt').value.trim(),
+    body: document.getElementById('postBody').value.trim(),
+    author: document.getElementById('postAuthor').value.trim() || 'Unknown',
+    date: new Date().toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'}),
+    image: document.getElementById('postImage').value.trim()
+  };
+
+  state.posts.unshift(post);
+  saveData(state.videos, state.posts);
+  renderBlog();
+  clearPostForm();
+  showToast('✓ Post published');
+  closeAdmin();
+  switchTab('about');
+}
+
+function clearPostForm() {
+  ['postTitle','postCategory','postExcerpt','postBody','postAuthor','postImage'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+}
+
+function renderManageVideos() {
+  const list = document.getElementById('manageVideoList');
+  if (state.videos.length === 0) {
+    list.innerHTML = '<div class="empty-state"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg><p>No videos yet. Add one above.</p></div>';
+    return;
+  }
+  list.innerHTML = '';
+  state.videos.forEach((v, i) => {
+    const item = document.createElement('div');
+    item.className = 'content-item';
+    item.innerHTML = `
+      <img class="content-item-thumb" src="${v.thumb || ''}" alt="${v.title}" onerror="this.style.background='var(--bg-tertiary)'">
+      <div class="content-item-info">
+        <div class="content-item-title">${v.title}</div>
+        <div class="content-item-meta">${v.category} · ${v.author} · ${v.date}</div>
+      </div>
+      <div class="content-item-actions">
+        <button class="icon-btn" title="Move to featured" onclick="makeVideoFeatured(${i})" ${i===0?'style="color:var(--accent)"':''}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="${i===0?'var(--accent)':'none'}" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </button>
+        <button class="icon-btn danger" onclick="deleteVideo(${i})">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+        </button>
+      </div>
+    `;
+    list.appendChild(item);
+  });
+}
+
+function makeVideoFeatured(i) {
+  const v = state.videos.splice(i, 1)[0];
+  state.videos.unshift(v);
+  saveData(state.videos, state.posts);
+  renderManageVideos();
+  renderVideos();
+  showToast('✓ Set as featured');
+}
+
+function deleteVideo(i) {
+  state.videos.splice(i, 1);
+  saveData(state.videos, state.posts);
+  renderManageVideos();
+  renderVideos();
+  showToast('Video deleted');
+}
+
+function renderManagePosts() {
+  const list = document.getElementById('managePostList');
+  if (state.posts.length === 0) {
+    list.innerHTML = '<div class="empty-state"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><p>No posts yet. Add one above.</p></div>';
+    return;
+  }
+  list.innerHTML = '';
+  state.posts.forEach((p, i) => {
+    const item = document.createElement('div');
+    item.className = 'content-item';
+    item.innerHTML = `
+      <img class="content-item-thumb" src="${p.image || ''}" alt="${p.title}" onerror="this.style.background='var(--bg-tertiary)'">
+      <div class="content-item-info">
+        <div class="content-item-title">${p.title}</div>
+        <div class="content-item-meta">${p.category} · ${p.author} · ${p.date}</div>
+      </div>
+      <div class="content-item-actions">
+        <button class="icon-btn danger" onclick="deletePost(${i})">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+        </button>
+      </div>
+    `;
+    list.appendChild(item);
+  });
+}
+
+function deletePost(i) {
+  state.posts.splice(i, 1);
+  saveData(state.videos, state.posts);
+  renderManagePosts();
+  renderBlog();
+  showToast('Post deleted');
+}
+
+// ══════════════════════════════════════════════
+//  TOAST
+// ══════════════════════════════════════════════
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+// ══════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════
+renderVideos();
+renderBlog();
+loadCmsPosts();
+loadRepoPosts();
+switchTab('about');
+
+// Animate cards on scroll
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.style.opacity = 1; });
+}, { threshold: 0.1 });
+</script>
+
+<!-- ═══════════ ADMIN MODE BAR ═══════════ -->
+<div class="admin-bar" id="adminBar">
+  <div class="admin-bar-left">
+    <div class="admin-badge">
+      <div class="admin-badge-dot"></div>
+      Admin Mode
+    </div>
+    <span class="admin-bar-hint">Click ✏️ on any card to edit it</span>
+  </div>
+  <div class="admin-bar-right">
+    <button class="bar-btn bar-btn-ghost" onclick="openAddPanel('video')">＋ Video</button>
+    <button class="bar-btn bar-btn-ghost" onclick="openAddPanel('post')">＋ Post</button>
+    <button class="bar-btn bar-btn-danger" onclick="exitAdminMode()">Exit Admin Mode</button>
+  </div>
+</div>
+
+<!-- ═══════════ DRAWER BACKDROP ═══════════ -->
+<div class="drawer-backdrop" id="drawerBackdrop" onclick="closeDrawer()"></div>
+
+<!-- ═══════════ EDIT DRAWER ═══════════ -->
+<div class="edit-drawer" id="editDrawer">
+  <div class="drawer-header">
+    <div class="drawer-type-label">
+      <span class="drawer-type-pill" id="drawerPill">Video</span>
+      <span class="drawer-title" id="drawerTitle">Edit Content</span>
+    </div>
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="drawer-body" id="drawerBody">
+    <!-- fields injected by JS -->
+  </div>
+  <div class="drawer-footer">
+    <button class="drawer-save" onclick="saveDrawer()">Save Changes</button>
+    <button class="drawer-cancel" onclick="closeDrawer()">Cancel</button>
+    <button class="drawer-delete" id="drawerDeleteBtn" onclick="deleteDrawerItem()">Delete</button>
+  </div>
+</div>
+
+</body>
+</html>

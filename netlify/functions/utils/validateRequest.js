@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // ─────────────────────────────────────────────────────────────────────────────
 // utils/validateRequest.js
 //
@@ -50,11 +51,29 @@ function validateWebhookSecret(headers, secret) {
   }
 
   // ── Option B: X-Webhook-Secret: <secret> ─────────────────────────────────
+=======
+"use strict";
+
+function validateWebhookSecret(headers, secret) {
+  if (!secret) {
+    console.error("[validateRequest] WEBHOOK_SECRET is not set.");
+    return false;
+  }
+
+  const normalized = normalizeHeaders(headers);
+  const authHeader = normalized.authorization || "";
+  if (authHeader.toLowerCase().startsWith("bearer ")) {
+    const token = authHeader.slice(7).trim();
+    return timingSafeEqual(token, secret);
+  }
+
+>>>>>>> 6a4f02f89accc29c73e426a28dee055734008c15
   const secretHeader = normalized["x-webhook-secret"] || "";
   if (secretHeader) {
     return timingSafeEqual(secretHeader.trim(), secret);
   }
 
+<<<<<<< HEAD
   // Neither header was found — reject the request
   return false;
 }
@@ -77,18 +96,28 @@ function validateWebhookSecret(headers, secret) {
  * @param {string} b
  * @returns {boolean}
  */
+=======
+  return false;
+}
+
+>>>>>>> 6a4f02f89accc29c73e426a28dee055734008c15
 function timingSafeEqual(a, b) {
   if (typeof a !== "string" || typeof b !== "string") return false;
   if (a.length !== b.length) return false;
 
   let mismatch = 0;
+<<<<<<< HEAD
   for (let i = 0; i < a.length; i++) {
     // XOR the char codes — any difference makes mismatch non-zero
+=======
+  for (let i = 0; i < a.length; i += 1) {
+>>>>>>> 6a4f02f89accc29c73e426a28dee055734008c15
     mismatch |= a.charCodeAt(i) ^ b.charCodeAt(i);
   }
   return mismatch === 0;
 }
 
+<<<<<<< HEAD
 /**
  * Converts all header keys to lowercase for consistent lookup.
  *
@@ -99,10 +128,17 @@ function normalizeHeaders(headers) {
   if (!headers || typeof headers !== "object") return {};
   return Object.fromEntries(
     Object.entries(headers).map(([k, v]) => [k.toLowerCase(), v])
+=======
+function normalizeHeaders(headers) {
+  if (!headers || typeof headers !== "object") return {};
+  return Object.fromEntries(
+    Object.entries(headers).map(([key, value]) => [key.toLowerCase(), value])
+>>>>>>> 6a4f02f89accc29c73e426a28dee055734008c15
   );
 }
 
 module.exports = { validateWebhookSecret };
+<<<<<<< HEAD
 
 // ─────────────────────────────────────────────────────────────────────────────
 // FUTURE UPGRADE: HMAC-SHA256 Signature Verification
@@ -129,3 +165,5 @@ module.exports = { validateWebhookSecret };
 // Then call it in marblism-bridge.js:
 //   if (!validateHmacSignature(event.headers, event.body, secret)) { ... }
 // ─────────────────────────────────────────────────────────────────────────────
+=======
+>>>>>>> 6a4f02f89accc29c73e426a28dee055734008c15

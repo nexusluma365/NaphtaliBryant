@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // ─────────────────────────────────────────────────────────────────────────────
 // scripts/test-bridge.js
 //
@@ -29,6 +30,11 @@
 
 // ── Load .env ─────────────────────────────────────────────────────────────────
 const fs   = require("fs");
+=======
+"use strict";
+
+const fs = require("fs");
+>>>>>>> 6a4f02f89accc29c73e426a28dee055734008c15
 const path = require("path");
 
 const envFile = path.join(__dirname, "..", ".env");
@@ -38,15 +44,23 @@ if (fs.existsSync(envFile)) {
     if (!clean || clean.startsWith("#")) return;
     const eqAt = clean.indexOf("=");
     if (eqAt < 1) return;
+<<<<<<< HEAD
     const k = clean.slice(0, eqAt).trim();
     const v = clean.slice(eqAt + 1).trim();
     if (k && !process.env[k]) process.env[k] = v;
   });
   console.log("✓ .env loaded\n");
+=======
+    const key = clean.slice(0, eqAt).trim();
+    const value = clean.slice(eqAt + 1).trim();
+    if (key && !process.env[key]) process.env[key] = value;
+  });
+>>>>>>> 6a4f02f89accc29c73e426a28dee055734008c15
 }
 
 const { handler } = require("../netlify/functions/marblism-bridge");
 
+<<<<<<< HEAD
 const SECRET   = process.env.WEBHOOK_SECRET || "";
 const GOOD_HDR = { "content-type": "application/json", "authorization": `Bearer ${SECRET}` };
 const BAD_HDR  = { "content-type": "application/json", "authorization": "Bearer wrong-secret" };
@@ -152,10 +166,54 @@ const TESTS = [
     name:   "Missing title (expect 400)",
     expect: 400,
     headers: GOOD_HDR,
+=======
+const SECRET = process.env.WEBHOOK_SECRET || "";
+const GOOD_HEADERS = { "content-type": "application/json", authorization: `Bearer ${SECRET}` };
+const BAD_HEADERS = { "content-type": "application/json", authorization: "Bearer wrong-secret" };
+
+const TESTS = [
+  {
+    name: "Standard canonical field names",
+    expect: 200,
+    headers: GOOD_HEADERS,
+    payload: {
+      title: `[TEST-1] Standard shape - ${ts()}`,
+      body: testBody("Standard shape test"),
+      excerpt: "Testing the standard canonical payload shape.",
+      author: "Naphtali Bryant",
+      category: "Technology",
+      image: "/assets/uploads/test.jpg",
+      tags: ["test", "standard", "automation"],
+      draft: true,
+      publishDate: "2026-04-08",
+    },
+  },
+  {
+    name: "Alternate field names",
+    expect: 200,
+    headers: GOOD_HEADERS,
+    payload: {
+      post_title: `[TEST-2] Alias shape - ${ts()}`,
+      content: testBody("Alias shape test"),
+      summary: "Testing alias field name mapping.",
+      byline: "Naphtali Bryant",
+      topic: "Marketing",
+      cover_image: "/assets/uploads/cover.jpg",
+      tag_list: ["test", "aliases"],
+      is_draft: true,
+      publish_date: "2026-04-08",
+    },
+  },
+  {
+    name: "Missing title",
+    expect: 400,
+    headers: GOOD_HEADERS,
+>>>>>>> 6a4f02f89accc29c73e426a28dee055734008c15
     payload: {
       body: "This post has content but no title field.",
     },
   },
+<<<<<<< HEAD
 
   // ── 8: Empty body → expect 400 ────────────────────────────────────────────
   {
@@ -226,11 +284,34 @@ const TESTS = [
       path:       "/.netlify/functions/marblism-bridge",
       headers:    test.headers,
       body:       JSON.stringify(test.payload),
+=======
+  {
+    name: "Wrong webhook secret",
+    expect: 401,
+    headers: BAD_HEADERS,
+    payload: {
+      title: "Test post",
+      body: "Test content for secret validation.",
+    },
+  },
+];
+
+(async () => {
+  const results = { passed: 0, failed: 0 };
+
+  for (const test of TESTS) {
+    const event = {
+      httpMethod: "POST",
+      path: "/.netlify/functions/marblism-bridge",
+      headers: test.headers,
+      body: JSON.stringify(test.payload),
+>>>>>>> 6a4f02f89accc29c73e426a28dee055734008c15
     };
 
     let result;
     try {
       result = await handler(event);
+<<<<<<< HEAD
     } catch (unexpectedErr) {
       console.error(`  ✗ HANDLER THREW (unexpected):`, unexpectedErr.message);
       results.failed++;
@@ -285,11 +366,34 @@ const TESTS = [
 // Helpers
 // ─────────────────────────────────────────────────────────────────────────────
 
+=======
+    } catch (err) {
+      console.error(`Unexpected handler error for "${test.name}": ${err.message}`);
+      results.failed += 1;
+      continue;
+    }
+
+    const passed = result.statusCode === test.expect;
+    if (passed) results.passed += 1;
+    else results.failed += 1;
+
+    const body = safeParseJson(result.body);
+    console.log(`${passed ? "PASS" : "FAIL"} ${test.name}: HTTP ${result.statusCode} expected ${test.expect}`);
+    if (body.error) console.log(`  error: ${body.error}`);
+    if (body.slug) console.log(`  slug: ${body.slug}`);
+  }
+
+  console.log(`Passed: ${results.passed}`);
+  console.log(`Failed: ${results.failed}`);
+})();
+
+>>>>>>> 6a4f02f89accc29c73e426a28dee055734008c15
 function ts() {
   return new Date().toISOString().slice(0, 19).replace("T", " ");
 }
 
 function testBody(label) {
+<<<<<<< HEAD
   return `## ${label}\n\nThis is an automated test post generated by test-bridge.js.\n\nIt was committed as draft: true and will not appear on the live site.\nDelete this file from your GitHub repo when testing is complete.`;
 }
 
@@ -302,4 +406,15 @@ function divider(label) {
 
 function safeParseJson(str) {
   try { return JSON.parse(str); } catch { return {}; }
+=======
+  return `## ${label}\n\nThis is an automated test post generated by test-bridge.js.\n\nDelete the committed test file after validating the bridge.`;
+}
+
+function safeParseJson(str) {
+  try {
+    return JSON.parse(str);
+  } catch {
+    return {};
+  }
+>>>>>>> 6a4f02f89accc29c73e426a28dee055734008c15
 }

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // ─────────────────────────────────────────────────────────────────────────────
 // utils/buildMarkdown.js
 //
@@ -42,10 +43,15 @@
  *
  * @returns {string} Complete markdown file content ready to commit
  */
+=======
+"use strict";
+
+>>>>>>> 6a4f02f89accc29c73e426a28dee055734008c15
 function buildMarkdown(post) {
   const {
     title,
     body,
+<<<<<<< HEAD
     excerpt     = "",
     author      = "Naphtali Bryant",
     category    = "",
@@ -78,11 +84,39 @@ function buildMarkdown(post) {
     `category: "${q(category)}"`,
     `image: "${q(image)}"`,
     `excerpt: "${q(excerpt)}"`,
+=======
+    excerpt = "",
+    author = "Naphtali Bryant",
+    category = "",
+    image = "",
+    tags = [],
+    draft = false,
+    publishDate = "",
+  } = post;
+
+  const date = resolveDate(publishDate);
+  const tagsBlock =
+    Array.isArray(tags) && tags.length > 0
+      ? "tags:\n" + tags.map((tag) => `  - ${cleanTag(tag)}`).join("\n")
+      : "tags: []";
+
+  const quote = (str) => String(str || "").replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+
+  const frontmatter = [
+    "---",
+    `title: "${quote(title)}"`,
+    `date: "${date}"`,
+    `author: "${quote(author)}"`,
+    `category: "${quote(category)}"`,
+    `image: "${quote(image)}"`,
+    `excerpt: "${quote(excerpt)}"`,
+>>>>>>> 6a4f02f89accc29c73e426a28dee055734008c15
     `draft: ${draft === true ? "true" : "false"}`,
     tagsBlock,
     "---",
   ].join("\n");
 
+<<<<<<< HEAD
   // ── Final file: frontmatter + blank line + body + trailing newline ─────────
   // The trailing newline is a POSIX convention and prevents "no newline at
   // end of file" warnings in git diffs.
@@ -100,6 +134,11 @@ function buildMarkdown(post) {
  * @param {string} input
  * @returns {string} e.g. "2026-04-08"
  */
+=======
+  return `${frontmatter}\n\n${body.trim()}\n`;
+}
+
+>>>>>>> 6a4f02f89accc29c73e426a28dee055734008c15
 function resolveDate(input) {
   if (input) {
     try {
@@ -107,6 +146,7 @@ function resolveDate(input) {
       if (!isNaN(parsed.getTime())) {
         return parsed.toISOString().slice(0, 10);
       }
+<<<<<<< HEAD
     } catch {
       // fall through to today
     }
@@ -121,13 +161,27 @@ function resolveDate(input) {
  * @param {string} tag
  * @returns {string}
  */
+=======
+    } catch {}
+  }
+
+  return new Date().toISOString().slice(0, 10);
+}
+
+>>>>>>> 6a4f02f89accc29c73e426a28dee055734008c15
 function cleanTag(tag) {
   return String(tag)
     .toLowerCase()
     .trim()
+<<<<<<< HEAD
     .replace(/[^a-z0-9-]/g, "-")   // replace anything non-alphanumeric with hyphen
     .replace(/-+/g, "-")           // collapse consecutive hyphens
     .replace(/^-+|-+$/g, "");      // strip leading/trailing hyphens
+=======
+    .replace(/[^a-z0-9-]/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "");
+>>>>>>> 6a4f02f89accc29c73e426a28dee055734008c15
 }
 
 module.exports = { buildMarkdown };

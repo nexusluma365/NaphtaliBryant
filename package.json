@@ -1,7 +1,11 @@
 {
   "name": "naphtali-bryant-blog",
   "version": "1.0.0",
+<<<<<<< HEAD
   "description": "Blog site with Marblism \u2192 GitHub \u2192 Netlify automation bridge",
+=======
+  "description": "Blog site with Marblism to GitHub to Netlify automation bridge",
+>>>>>>> 6a4f02f89accc29c73e426a28dee055734008c15
   "private": true,
   "engines": {
     "node": ">=18.0.0"

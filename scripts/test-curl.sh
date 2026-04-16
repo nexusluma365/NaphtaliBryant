@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+<<<<<<< HEAD
 # ─────────────────────────────────────────────────────────────────────────────
 # scripts/test-curl.sh
 #
@@ -31,10 +32,17 @@ divider() {
 # ── Test 1: Auto-publish a post ───────────────────────────────────────────────
 divider "Test 1: Auto-publish (draft: false)"
 
+=======
+
+SECRET="your-webhook-secret-here"
+ENDPOINT="https://your-site.netlify.app/.netlify/functions/marblism-bridge"
+
+>>>>>>> 6a4f02f89accc29c73e426a28dee055734008c15
 curl -s -X POST "$ENDPOINT" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $SECRET" \
   -d '{
+<<<<<<< HEAD
     "title":       "10 Ways AI Is Transforming Content Marketing",
     "body":        "## Introduction\n\nArtificial intelligence is changing the game for content marketers everywhere.\n\n## Section One\n\nSome detail here.",
     "excerpt":     "A deep dive into how AI tools are reshaping the content marketing landscape.",
@@ -91,3 +99,15 @@ echo "  If Tests 1 and 2 returned HTTP 200, your bridge is working."
 echo "  Check your GitHub repo to see the committed markdown files."
 echo "  Check Netlify for an automatic deploy triggered by the commit."
 echo ""
+=======
+    "title": "10 Ways AI Is Transforming Content Marketing",
+    "body": "## Introduction\n\nArtificial intelligence is changing the game for content marketers everywhere.",
+    "excerpt": "A deep dive into how AI tools are reshaping the content marketing landscape.",
+    "author": "Naphtali Bryant",
+    "category": "Marketing",
+    "image": "/assets/uploads/ai-marketing.jpg",
+    "tags": ["ai", "marketing", "content"],
+    "draft": false,
+    "publishDate": "2026-04-08"
+  }'
+>>>>>>> 6a4f02f89accc29c73e426a28dee055734008c15
