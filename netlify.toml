@@ -1,64 +1,54 @@
 <<<<<<< HEAD
-# ─────────────────────────────────────────────────────────────────────────────
-# netlify.toml
-#
-# Netlify build and function configuration.
-# This file lives in the ROOT of your GitHub repo.
-#
-# IMPORTANT: If you already have a netlify.toml, do NOT replace it.
-# Instead, copy only the blocks you're missing into your existing file.
-# ─────────────────────────────────────────────────────────────────────────────
-
 [build]
-  # ── Adjust these two lines to match your existing site setup ─────────────
-  # Your site's build command. Common values:
-  #   SvelteKit:  "npm run build"
-  #   Hugo:       "hugo"
-  #   Eleventy:   "npx @11ty/eleventy"
-  #   Jekyll:     "jekyll build"
-  command = "npm run build"
-
-  # The folder Netlify publishes to its CDN after the build. Common values:
-  #   SvelteKit:  ".svelte-kit/output" or "build"
-  #   Hugo:       "public"
-  #   Eleventy:   "_site"
-  publish = "build"
-
-  # Where your Netlify Functions live — do not change this
+  publish = "."
   functions = "netlify/functions"
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Functions configuration
-# ─────────────────────────────────────────────────────────────────────────────
 [functions]
-  # Use esbuild to bundle the function and its utils/ dependencies together.
-  # This is the fastest bundler and works perfectly with Node.js 20.
   node_bundler = "esbuild"
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Friendly URL alias for the bridge
-#
-# Makes the endpoint easier to remember and share:
-#   /api/publish  →  /.netlify/functions/marblism-bridge
-#
-# Either URL will work. Remove this block if you don't want the alias.
-# ─────────────────────────────────────────────────────────────────────────────
 [[redirects]]
-  from   = "/api/publish"
-  to     = "/.netlify/functions/marblism-bridge"
+  from = "/api/publish"
+  to = "/.netlify/functions/marblism-bridge"
   status = 200
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Security headers added to every page on your site
-# These do not affect the bridge function's behaviour.
-# ─────────────────────────────────────────────────────────────────────────────
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    X-Content-Type-Options = "nosniff"
+
+[[headers]]
+  for = "/*.mp4"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.webp"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/data/*"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Access-Control-Allow-Origin = "*"
+
 [[headers]]
   for = "/*"
   [headers.values]
-    X-Frame-Options        = "DENY"
+    X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
-    Referrer-Policy        = "strict-origin-when-cross-origin"
-=======
+    Referrer-Policy = "strict-origin-when-cross-origin"
 [build]
   publish = "."
   functions = "netlify/functions"
